@@ -1,9 +1,9 @@
 package game;
 
-public class Geant extends Personnage {
+public class Geant extends Marine {
 
 	@Override
-	public void seDeplacer() {
+	public void move() {
 		// TODO Auto-generated method stub
 		
 	}

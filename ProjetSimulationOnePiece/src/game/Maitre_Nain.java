@@ -1,5 +1,5 @@
 package game;
 
-public class Maitre_Nain {
+public class Maitre_Nain extends Nains{
 
 }
