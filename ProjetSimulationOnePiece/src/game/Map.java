@@ -23,7 +23,7 @@ public class Map {
 	
 	// --------------------------------------------------------------------
 	
-	private final int TAILLE_MAP = 50;
+	private final int TAILLE_MAP = 40;
 	private final int NB_HUMAINS = 6;
 	private final int NB_GEANTS = 4;
 	private final int NB_HOMME_POISSONS = 5;
@@ -52,6 +52,7 @@ public class Map {
 			this.humains.add(h);
 			this.personnages.add(h);
 		}
+		
 		for(int i = 0; i < NB_GEANTS; i++) {
 			Geant g = new Geant();
 			this.geants.add(g);
@@ -71,6 +72,18 @@ public class Map {
 		Collections.shuffle(this.personnages);
 	}
 	
+	private void placePersonnage() {
+		for(Personnage p : personnages) {
+			for( ArrayList<Case> tab : this.map) {
+				for(Case c : tab) {
+					if(c.getPersonnage()==null) {
+						System.out.println("hello");
+					}
+				}
+			}
+		}
+	}
+	
 	private void generateMap() {
 		for(int i = 0; i < TAILLE_MAP; i++) {
 			ArrayList<Case> subList=new ArrayList<Case>();
@@ -79,19 +92,34 @@ public class Map {
 				if(i < TAILLE_SAFE_ZONE && j < TAILLE_SAFE_ZONE) {
 					// Case safe pour les Humains
 					c = new Case(i,j,true,false,false,false);
-					
+					if(i==0 && j==0) {
+						Maitre_Humain h = Maitre_Humain.getInstance();
+						c.setPersonnage(h);
+					}					
 				}
 				else if(i >= TAILLE_MAP-TAILLE_SAFE_ZONE && j < TAILLE_SAFE_ZONE) {
 					// Case safe pour les Homme-Poissons
 					c = new Case(i,j,false,true,false,false);
+					if(i==TAILLE_MAP-1 && j==0) {
+						Maitre_Homme_Poisson p = Maitre_Homme_Poisson.getInstance();
+						c.setPersonnage(p);
+					}
 				}
 				else if(i < TAILLE_SAFE_ZONE && j >= TAILLE_MAP-TAILLE_SAFE_ZONE) {
 					// Case safe pour les Géants
 					c = new Case(i,j,false,false,true,false);
+					if(i==0 && j==TAILLE_MAP-1) {
+						Maitre_Geant g = Maitre_Geant.getInstance();
+						c.setPersonnage(g);
+					}
 				}
 				else if(i >= TAILLE_MAP-TAILLE_SAFE_ZONE && j >= TAILLE_MAP-TAILLE_SAFE_ZONE) {
 					// Case safe pour les Nains
 					c = new Case(i,j,false,false,false,true);
+					if(i==TAILLE_MAP-1 && j==TAILLE_MAP-1) {
+						Maitre_Nain n = Maitre_Nain.getInstance();
+						c.setPersonnage(n);
+					}
 				}
 				else {
 					// Le reste du plateau
@@ -125,20 +153,50 @@ public class Map {
 		System.out.println("a faire");
 		for( ArrayList<Case> tab : this.map) {
 			for(Case c : tab) {
-				if(c.isSafeForGeant) {
-					System.out.printf("x");
-				}
-				else if(c.isSafeForHommePoisson) {
-					System.out.printf("x");
-				}
-				else if(c.isSafeForHumain) {
-					System.out.printf("x");
-				}
-				else if(c.isSafeForNain) {
-					System.out.printf("x");
+				Personnage p = c.getPersonnage();
+				Obstacle o = c.getObstacle();
+				if(p!=null) {
+					if(p instanceof Maitre_Humain) {
+						System.out.printf("H");
+					}
+					else if(p instanceof Maitre_Nain) {
+						System.out.printf("N");
+					}
+					else if(p instanceof Maitre_Homme_Poisson) {
+						System.out.printf("P");
+					}
+					else if(p instanceof Maitre_Geant) {
+						System.out.printf("G");
+					}
+					else if(p instanceof Humains) {
+						System.out.printf("p");
+					}
+					else if(p instanceof Hommes_Poissons) {
+						System.out.printf("p");
+					}
+					else if(p instanceof Geant) {
+						System.out.printf("g");
+					}
+					else if(p instanceof Nains) {
+						System.out.printf("n");
+					}
 				}
 				else {
-					System.out.printf("o");
+					if(c.isSafeForGeant) {
+						System.out.printf("x");
+					}
+					else if(c.isSafeForHommePoisson) {
+						System.out.printf("x");
+					}
+					else if(c.isSafeForHumain) {
+						System.out.printf("x");
+					}
+					else if(c.isSafeForNain) {
+						System.out.printf("x");
+					}
+					else {
+						System.out.printf("o");
+					}
 				}
 				System.out.printf(" ");
 			}
