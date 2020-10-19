@@ -1,5 +1,6 @@
 package game;
 
+<<<<<<< HEAD
 public class Maitre_Humain extends Humains {
 	
 	
@@ -23,5 +24,8 @@ public class Maitre_Humain extends Humains {
 
 	
 	
+=======
+public class Maitre_Humain extends Humains{
+>>>>>>> Prototype
 
 }

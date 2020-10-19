@@ -1,5 +1,5 @@
 package game;
 
-public abstract class Marine {
+public abstract class Marine extends Personnage{
 
 }

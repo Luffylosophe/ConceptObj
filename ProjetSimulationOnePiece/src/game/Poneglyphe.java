@@ -1,6 +1,6 @@
 package game;
 
-public class Poneglyphe {
+public class Poneglyphe extends Obstacle{
 	
 	String message;
 

@@ -1,9 +1,9 @@
 package game;
 
-public class Hommes_Poissons extends Personnage {
+public class Hommes_Poissons extends Marine {
 
 	@Override
-	public void seDeplacer() {
+	public void move() {
 		// TODO Auto-generated method stub
 		
 	}

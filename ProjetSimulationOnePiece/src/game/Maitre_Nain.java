@@ -1,5 +1,6 @@
 package game;
 
+<<<<<<< HEAD
 public class Maitre_Nain extends Nains {
 	
 	
@@ -23,6 +24,9 @@ public class Maitre_Nain extends Nains {
 
 	
 	
+=======
+public class Maitre_Nain extends Nains{
+>>>>>>> Prototype
 
 }
 
