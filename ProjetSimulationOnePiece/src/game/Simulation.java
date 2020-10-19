@@ -7,5 +7,7 @@ public class Simulation {
 		// TODO Auto-generated method stub
 
 	}
-
+	private void startSimulation(Map map) {
+		System.out.println("Go simulation");
+	}
 }
