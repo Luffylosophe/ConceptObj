@@ -26,7 +26,7 @@ public class Map {
 	
 	// --------------------------------------------------------------------
 	
-	public static final int TAILLE_MAP = 20;
+	public static final int TAILLE_MAP = 15;
 	public static final int NB_HUMAINS = 6;
 	public static final int NB_GEANTS = 4;
 	public static final int NB_HOMME_POISSONS = 5;
@@ -219,7 +219,7 @@ public class Map {
 						System.out.printf("G");
 					}
 					else if(p instanceof Humains) {
-						System.out.printf("p");
+						System.out.printf("h");
 					}
 					else if(p instanceof Hommes_Poissons) {
 						System.out.printf("p");
