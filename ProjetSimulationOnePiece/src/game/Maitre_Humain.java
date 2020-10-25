@@ -5,7 +5,6 @@ public class Maitre_Humain extends Humains {
 	
 	
 	private Maitre_Humain() {
-		
 	}
 	
 	private static Maitre_Humain instance = null;

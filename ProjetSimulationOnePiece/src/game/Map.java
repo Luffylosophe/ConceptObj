@@ -1,7 +1,10 @@
 package game;
 
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.Collections;
+
+
 public class Map {
 	private ArrayList<ArrayList<Case>> map;
 	
@@ -23,15 +26,15 @@ public class Map {
 	
 	// --------------------------------------------------------------------
 	
-	private final int TAILLE_MAP = 40;
-	private final int NB_HUMAINS = 6;
-	private final int NB_GEANTS = 4;
-	private final int NB_HOMME_POISSONS = 5;
-	private final int NB_NAINS = 7;
-	private final int NB_MONTAGNES = 5;
-	private final int NB_EAU = 6;
-	private final int NB_PONEGLYPHES = 4;
-	private final int TAILLE_SAFE_ZONE = 10;
+	public static final int TAILLE_MAP = 20;
+	public static final int NB_HUMAINS = 6;
+	public static final int NB_GEANTS = 4;
+	public static final int NB_HOMME_POISSONS = 5;
+	public static final int NB_NAINS = 7;
+	public static final int NB_MONTAGNES = 5;
+	public static final int NB_EAU = 6;
+	public static final int NB_PONEGLYPHES = 4;
+	public static final int TAILLE_SAFE_ZONE = 4;
 	
 	public Map() {
 		
@@ -40,6 +43,7 @@ public class Map {
 		map = new ArrayList<ArrayList<Case>>();
 		this.generateCharacters();
 		this.generateMap();
+		this.placePersonnage();
 		this.printMap();
 		
 		
@@ -73,18 +77,59 @@ public class Map {
 	}
 	
 	private void placePersonnage() {
-		for(Personnage p : personnages) {
-			for( ArrayList<Case> tab : this.map) {
-				for(Case c : tab) {
-					if(c.getPersonnage()==null) {
-						System.out.println("hello");
-					}
-				}
+		//Creation Humains (On randInt entre 1 et la taille de la safe zone pour eviter de toucher le maître
+		for(Humains h : this.humains) {
+			int x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+			int y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+			System.out.println(x + " " + y);
+			while(this.getCase(x,y).getPersonnage()!=null) {
+				x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+				y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
 			}
+			Case currentCase=this.getCase(x, y);
+			h.setCase(currentCase);
+			currentCase.setPersonnage(h);
+		}
+		for(Nains n : this.nains) {
+			int x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
+			int y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
+			System.out.println(x + " " + y);
+			while(this.getCase(x,y).getPersonnage()!=null) {
+				x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
+				y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
+			}
+			Case currentCase=this.getCase(x, y);
+			n.setCase(currentCase);
+			currentCase.setPersonnage(n);
+		}
+		for(Geant g : this.geants) {
+			int x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+			int y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
+			System.out.println(x + " " + y);
+			while(this.getCase(x,y).getPersonnage()!=null) {
+				x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+				y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
+			}
+			Case currentCase=this.getCase(x, y);
+			g.setCase(currentCase);
+			currentCase.setPersonnage(g);
+		}
+		for(Hommes_Poissons p : this.homme_poissons) {
+			int x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
+			int y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+			System.out.println(x + " " + y);
+			while(this.getCase(x,y).getPersonnage()!=null) {
+				x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
+				y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+			}
+			Case currentCase=this.getCase(x, y);
+			p.setCase(currentCase);
+			currentCase.setPersonnage(p);
 		}
 	}
 	
 	private void generateMap() {
+
 		for(int i = 0; i < TAILLE_MAP; i++) {
 			ArrayList<Case> subList=new ArrayList<Case>();
 			for(int j = 0; j < TAILLE_MAP; j++) {
@@ -95,7 +140,7 @@ public class Map {
 					if(i==0 && j==0) {
 						Maitre_Humain h = Maitre_Humain.getInstance();
 						c.setPersonnage(h);
-					}					
+					}
 				}
 				else if(i >= TAILLE_MAP-TAILLE_SAFE_ZONE && j < TAILLE_SAFE_ZONE) {
 					// Case safe pour les Homme-Poissons
@@ -130,6 +175,7 @@ public class Map {
 			this.map.add(subList);
 		}
 	}
+	
 	private void printPropertiesSimulation() {
 		System.out.println("");
 		Utilitaires.repeat("*",80);
@@ -147,6 +193,10 @@ public class Map {
 		Utilitaires.repeat("*",80);
 		System.out.println("\n\n\n\n");
 		
+	}
+	
+	public Case getCase(int x, int y) {
+		return this.map.get(x).get(y);
 	}
 	
 	public void printMap() {
