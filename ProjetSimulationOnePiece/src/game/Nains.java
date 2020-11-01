@@ -27,6 +27,9 @@ public class Nains extends Pirate {
 					if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
 						availableCases.add(currentCase);
 					}
+					else if(currentCase.getPersonnage()==null && currentCase.getObstacle() instanceof Montagne) {
+						availableCases.add(currentCase);
+					}
 					//ajouter les autres cas de figure
 				}
 			}

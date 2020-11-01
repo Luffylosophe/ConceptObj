@@ -26,6 +26,9 @@ public class Hommes_Poissons extends Marine {
 					if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
 						availableCases.add(currentCase);
 					}
+					else if(currentCase.getPersonnage()==null && currentCase.getObstacle() instanceof Eau) {
+						availableCases.add(currentCase);
+					}
 					//ajouter les autres cas de figure
 				}
 			}

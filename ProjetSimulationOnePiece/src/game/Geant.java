@@ -6,7 +6,6 @@ public class Geant extends Marine {
 
 	@Override
 	public void move(Map m) {
-		// TODO Auto-generated method stub
 		Case nextMove = selectNextMove(m);
 		if(nextMove.getPersonnage()==null && nextMove!=null) {
 			this.updatePosition(m,nextMove);
@@ -25,6 +24,9 @@ public class Geant extends Marine {
 				if(i>=0 && j>=0 && i<Map.TAILLE_MAP && j<Map.TAILLE_MAP){
 					Case currentCase=m.getCase(i, j);
 					if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
+						availableCases.add(currentCase);
+					}
+					else if(currentCase.getObstacle() instanceof Cadavre && currentCase.getPersonnage()==null) {
 						availableCases.add(currentCase);
 					}
 					//ajouter les autres cas de figure
