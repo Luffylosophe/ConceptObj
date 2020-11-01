@@ -21,7 +21,7 @@ public class Geant extends Marine {
 		int y = c.getPosY();
 		for(int i = x-1; i <= x+1; i++) {
 			for(int j = y -1; j <= y+1; j++) {
-				if(i>=0 && j>=0 && i<Map.TAILLE_MAP && j<Map.TAILLE_MAP){
+				if(i>=0 && j>=0 && i<m.TAILLE_MAP && j<m.TAILLE_MAP){
 					Case currentCase=m.getCase(i, j);
 					if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
 						availableCases.add(currentCase);
@@ -75,9 +75,9 @@ public class Geant extends Marine {
 	}
 
 	@Override
-	protected boolean isInSafeZone() {
+	protected boolean isInSafeZone(Map m) {
 		// TODO Auto-generated method stub
-		if(this.c.getPosX() < Map.TAILLE_SAFE_ZONE && this.c.getPosY() >= Map.TAILLE_MAP-Map.TAILLE_SAFE_ZONE) return true;
+		if(this.c.getPosX() < m.TAILLE_SAFE_ZONE && this.c.getPosY() >= m.TAILLE_MAP-m.TAILLE_SAFE_ZONE) return true;
 		else return false;
 	}
 }

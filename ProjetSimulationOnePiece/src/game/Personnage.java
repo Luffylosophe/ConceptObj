@@ -11,7 +11,7 @@ public abstract class Personnage {
 	public abstract void attaquer(); // fonction qui permet d'attaquer un personnage
 	public abstract void parler(); // fonction qui permet d'�changer un message avec un alli�
 	public abstract void mourir(); // fonction qui cr�e un cadavre l� ou le personnage meurt
-	protected abstract boolean isInSafeZone();
+	protected abstract boolean isInSafeZone(Map m);
 	
     public void addPoneglyphe(Poneglyphe p) {
     	if(this.poneglyphes.contains(p)==false) {

@@ -27,15 +27,15 @@ public class Map {
 	
 	// --------------------------------------------------------------------
 	
-	public static final int TAILLE_MAP = 15;
-	public static final int NB_HUMAINS = 6;
-	public static final int NB_GEANTS = 4;
-	public static final int NB_HOMME_POISSONS = 5;
-	public static final int NB_NAINS = 7;
-	public static final int NB_MONTAGNES = 8;
-	public static final int NB_EAU = 10;
-	public static final int NB_PONEGLYPHES = 4;
-	public static final int TAILLE_SAFE_ZONE = 4;
+	public final int TAILLE_MAP = 15;
+	public final int NB_HUMAINS = 6;
+	public final int NB_GEANTS = 4;
+	public final int NB_HOMME_POISSONS = 5;
+	public final int NB_NAINS = 7;
+	public final int NB_MONTAGNES = 8;
+	public final int NB_EAU = 10;
+	public final int NB_PONEGLYPHES = 4;
+	public final int TAILLE_SAFE_ZONE = 4;
 	
 	public Map() {
 		this.generate();

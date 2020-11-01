@@ -3,17 +3,17 @@ package game;
 public class Simulation {
 
 	public static void main(String[] args) {
-		startSimulation();
+		startSimulation(1);
 		// TODO Auto-generated method stub
 
 	}
-	private static void startSimulation() {
+	private static void startSimulation(int pas) {
 		System.out.println("LANCEMENT DE LA SIMULATION");
 		Map sim = new Map();
 		while(hasWon(sim)==false){
 			update(sim);
 			try {
-				java.util.concurrent.TimeUnit.SECONDS.sleep(1);
+				java.util.concurrent.TimeUnit.SECONDS.sleep(pas);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
