@@ -38,12 +38,7 @@ public class Case {
 	}
 
 	public void setPersonnage(Personnage p) {
-		if(this.personnage==null) {
-			this.personnage = p;
-		}
-		else {
-			System.out.println("ERREUR dans SetPersonnage class Case.java : this.personnage n'est pas null");
-		}
+		this.personnage=p;
 	}
 
 	public int getPosY() {

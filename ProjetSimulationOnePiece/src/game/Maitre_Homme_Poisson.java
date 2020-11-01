@@ -1,8 +1,8 @@
 package game;
 
+import java.util.ArrayList;
 
 public class Maitre_Homme_Poisson extends Hommes_Poissons {
-	
 	
 	private Maitre_Homme_Poisson() {
 		
@@ -14,7 +14,6 @@ public class Maitre_Homme_Poisson extends Hommes_Poissons {
     {
     	if (instance == null) {
     		instance = new Maitre_Homme_Poisson();
-    		System.out.println(" Salut je suis l'unique "+instance.toString());
     		
     	}
     		

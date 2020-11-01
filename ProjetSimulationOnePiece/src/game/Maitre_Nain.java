@@ -1,5 +1,6 @@
 package game;
 
+import java.util.ArrayList;
 
 public class Maitre_Nain extends Nains {
 	
@@ -14,12 +15,14 @@ public class Maitre_Nain extends Nains {
     {
     	if (instance == null) {
     		instance = new Maitre_Nain();
-    		System.out.println(" Salut je suis l'unique "+instance.toString());
+    		
     		
     	}
     		
         return instance;
     }
+    
+
 
 
 	

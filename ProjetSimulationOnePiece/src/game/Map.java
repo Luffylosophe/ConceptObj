@@ -18,11 +18,12 @@ public class Map {
 	private ArrayList<Eau> eaux = new ArrayList<Eau>();
 	private ArrayList<Montagne> montagnes = new ArrayList<Montagne>();
 	private ArrayList<Cadavre> cadavre = new ArrayList<Cadavre>();
+	public ArrayList<Personnage> maitres = new ArrayList<Personnage>();
 	
 	// Listes générales
 	
-	private ArrayList<Personnage> personnages = new ArrayList<Personnage>();
-	private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
+	public ArrayList<Personnage> personnages = new ArrayList<Personnage>();
+	public ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 	
 	// --------------------------------------------------------------------
 	
@@ -37,14 +38,22 @@ public class Map {
 	public static final int TAILLE_SAFE_ZONE = 4;
 	
 	public Map() {
+		this.generate();
+	}
+	
+	public void generate() {
 		System.out.println("GENERATION DE LA MAP...");
-		printPropertiesSimulation();
-		map = new ArrayList<ArrayList<Case>>();
+		this.printPropertiesSimulation();
+		this.map = new ArrayList<ArrayList<Case>>();
 		this.generateCharacters();
 		this.generateMap();
 		this.placePersonnage();
 		this.placeObstacles();
 		this.printMap();
+	}
+	
+	public void shuffleCharacters() {
+		Collections.shuffle(this.personnages);
 	}
 	
 	private void generateCharacters() {
@@ -71,8 +80,10 @@ public class Map {
 			this.personnages.add(n);
 		}
 		// Permet de mélanger pour que tous les humains ne jouent pas en même temps par exemple
-		Collections.shuffle(this.personnages);
+		this.shuffleCharacters();
 	}
+	
+	
 	
 	private void placeObstacles() {
 		for(int i = 0; i < NB_MONTAGNES; i++) {
@@ -110,7 +121,7 @@ public class Map {
 				y=Utilitaires.randInt(1,TAILLE_MAP-1);
 				currentCase=this.getCase(x, y);
 			}
-			Poneglyphe p = new Poneglyphe();
+			Poneglyphe p = new Poneglyphe(i+1);
 			this.obstacles.add(p);
 			currentCase.setObstacle(p);
 		}
@@ -121,7 +132,6 @@ public class Map {
 		for(Humains h : this.humains) {
 			int x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
 			int y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
-			System.out.println(x + " " + y);
 			while(this.getCase(x,y).getPersonnage()!=null) {
 				x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
 				y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
@@ -133,7 +143,6 @@ public class Map {
 		for(Nains n : this.nains) {
 			int x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
 			int y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
-			System.out.println(x + " " + y);
 			while(this.getCase(x,y).getPersonnage()!=null) {
 				x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
 				y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
@@ -145,7 +154,6 @@ public class Map {
 		for(Geant g : this.geants) {
 			int x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
 			int y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
-			System.out.println(x + " " + y);
 			while(this.getCase(x,y).getPersonnage()!=null) {
 				x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
 				y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
@@ -157,7 +165,6 @@ public class Map {
 		for(Hommes_Poissons p : this.homme_poissons) {
 			int x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
 			int y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
-			System.out.println(x + " " + y);
 			while(this.getCase(x,y).getPersonnage()!=null) {
 				x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
 				y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
@@ -180,6 +187,7 @@ public class Map {
 					if(i==0 && j==0) {
 						Maitre_Humain h = Maitre_Humain.getInstance();
 						c.setPersonnage(h);
+						this.maitres.add(h);
 					}
 				}
 				else if(i >= TAILLE_MAP-TAILLE_SAFE_ZONE && j < TAILLE_SAFE_ZONE) {
@@ -188,6 +196,7 @@ public class Map {
 					if(i==TAILLE_MAP-1 && j==0) {
 						Maitre_Homme_Poisson p = Maitre_Homme_Poisson.getInstance();
 						c.setPersonnage(p);
+						this.maitres.add(p);
 					}
 				}
 				else if(i < TAILLE_SAFE_ZONE && j >= TAILLE_MAP-TAILLE_SAFE_ZONE) {
@@ -196,6 +205,7 @@ public class Map {
 					if(i==0 && j==TAILLE_MAP-1) {
 						Maitre_Geant g = Maitre_Geant.getInstance();
 						c.setPersonnage(g);
+						this.maitres.add(g);
 					}
 				}
 				else if(i >= TAILLE_MAP-TAILLE_SAFE_ZONE && j >= TAILLE_MAP-TAILLE_SAFE_ZONE) {
@@ -204,6 +214,7 @@ public class Map {
 					if(i==TAILLE_MAP-1 && j==TAILLE_MAP-1) {
 						Maitre_Nain n = Maitre_Nain.getInstance();
 						c.setPersonnage(n);
+						this.maitres.add(n);
 					}
 				}
 				else {
@@ -240,7 +251,6 @@ public class Map {
 	}
 	
 	public void printMap() {
-		System.out.println("a faire");
 		for( ArrayList<Case> tab : this.map) {
 			for(Case c : tab) {
 				Personnage p = c.getPersonnage();
@@ -253,7 +263,7 @@ public class Map {
 						System.out.printf("N");
 					}
 					else if(p instanceof Maitre_Homme_Poisson) {
-						System.out.printf("P");
+						System.out.printf("F");
 					}
 					else if(p instanceof Maitre_Geant) {
 						System.out.printf("G");
@@ -262,7 +272,7 @@ public class Map {
 						System.out.printf("h");
 					}
 					else if(p instanceof Hommes_Poissons) {
-						System.out.printf("p");
+						System.out.printf("f");
 					}
 					else if(p instanceof Geant) {
 						System.out.printf("g");
@@ -318,6 +328,7 @@ public class Map {
 			}
 			System.out.println("");
 		}
+		System.out.printf("\n\n\n\n");
 			
 		
 	}

@@ -1,5 +1,6 @@
 package game;
 
+import java.util.ArrayList;
 
 public class Maitre_Geant extends Geant {
 	
@@ -15,15 +16,12 @@ public class Maitre_Geant extends Geant {
     {
     	if (instance == null) {
     		instance = new Maitre_Geant();
-    		System.out.println(" Salut je suis l'unique "+instance.toString());
     		
     	}
     		
         return instance;
     }
 
-
-	
 	
 
 }

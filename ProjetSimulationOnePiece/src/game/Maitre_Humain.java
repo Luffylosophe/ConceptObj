@@ -1,9 +1,10 @@
 package game;
 
+import java.util.ArrayList;
 
 public class Maitre_Humain extends Humains {
 	
-	
+
 	private Maitre_Humain() {
 	}
 	
@@ -13,13 +14,11 @@ public class Maitre_Humain extends Humains {
     {
     	if (instance == null) {
     		instance = new Maitre_Humain();
-    		System.out.println(" Salut je suis l'unique "+instance.toString());
     		
     	}
     		
         return instance;
     }
-
 
 
 }
