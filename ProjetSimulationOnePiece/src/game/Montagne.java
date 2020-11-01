@@ -1,5 +1,5 @@
 package game;
 
-public class Montagne {
+public class Montagne extends Obstacle {
 
 }

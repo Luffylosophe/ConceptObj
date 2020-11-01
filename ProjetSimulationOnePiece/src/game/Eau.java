@@ -1,5 +1,5 @@
 package game;
 
-public class Eau {
+public class Eau extends Obstacle{
 
 }

@@ -31,22 +31,20 @@ public class Map {
 	public static final int NB_GEANTS = 4;
 	public static final int NB_HOMME_POISSONS = 5;
 	public static final int NB_NAINS = 7;
-	public static final int NB_MONTAGNES = 5;
-	public static final int NB_EAU = 6;
+	public static final int NB_MONTAGNES = 8;
+	public static final int NB_EAU = 10;
 	public static final int NB_PONEGLYPHES = 4;
 	public static final int TAILLE_SAFE_ZONE = 4;
 	
 	public Map() {
-		
 		System.out.println("GENERATION DE LA MAP...");
 		printPropertiesSimulation();
 		map = new ArrayList<ArrayList<Case>>();
 		this.generateCharacters();
 		this.generateMap();
 		this.placePersonnage();
+		this.placeObstacles();
 		this.printMap();
-		
-		
 	}
 	
 	private void generateCharacters() {
@@ -74,6 +72,48 @@ public class Map {
 		}
 		// Permet de mélanger pour que tous les humains ne jouent pas en même temps par exemple
 		Collections.shuffle(this.personnages);
+	}
+	
+	private void placeObstacles() {
+		for(int i = 0; i < NB_MONTAGNES; i++) {
+			int x=Utilitaires.randInt(0,TAILLE_MAP-1);
+			int y=Utilitaires.randInt(1,TAILLE_MAP-1);
+			Case currentCase=this.getCase(x, y);
+			while(currentCase.isSafeForSomeone() || currentCase.getObstacle()!=null) {
+				x=Utilitaires.randInt(0,TAILLE_MAP-1);
+				y=Utilitaires.randInt(1,TAILLE_MAP-1);
+				currentCase=this.getCase(x, y);
+			}
+			Montagne m = new Montagne();
+			this.obstacles.add(m);
+			currentCase.setObstacle(m);
+		}
+		for(int i = 0; i < NB_EAU; i++) {
+			int x=Utilitaires.randInt(0,TAILLE_MAP-1);
+			int y=Utilitaires.randInt(1,TAILLE_MAP-1);
+			Case currentCase=this.getCase(x, y);
+			while(currentCase.isSafeForSomeone() || currentCase.getObstacle()!=null) {
+				x=Utilitaires.randInt(0,TAILLE_MAP-1);
+				y=Utilitaires.randInt(1,TAILLE_MAP-1);
+				currentCase=this.getCase(x, y);
+			}
+			Eau e = new Eau();
+			this.obstacles.add(e);
+			currentCase.setObstacle(e);
+		}
+		for(int i = 0; i < NB_PONEGLYPHES; i++) {
+			int x=Utilitaires.randInt(0,TAILLE_MAP-1);
+			int y=Utilitaires.randInt(1,TAILLE_MAP-1);
+			Case currentCase=this.getCase(x, y);
+			while(currentCase.isSafeForSomeone() || currentCase.getObstacle()!=null) {
+				x=Utilitaires.randInt(0,TAILLE_MAP-1);
+				y=Utilitaires.randInt(1,TAILLE_MAP-1);
+				currentCase=this.getCase(x, y);
+			}
+			Poneglyphe p = new Poneglyphe();
+			this.obstacles.add(p);
+			currentCase.setObstacle(p);
+		}
 	}
 	
 	private void placePersonnage() {
@@ -205,7 +245,7 @@ public class Map {
 			for(Case c : tab) {
 				Personnage p = c.getPersonnage();
 				Obstacle o = c.getObstacle();
-				if(p!=null) {
+				if(p!=null && o==null) {
 					if(p instanceof Maitre_Humain) {
 						System.out.printf("H");
 					}
@@ -231,6 +271,32 @@ public class Map {
 						System.out.printf("n");
 					}
 				}
+				else if(o!=null && p==null){
+					if(o instanceof Cadavre) {
+						System.out.printf("c");
+					}
+					else if(o instanceof Montagne) {
+						System.out.printf("m");
+					}
+					else if(o instanceof Poneglyphe) {
+						System.out.printf("P");
+					}
+					else if(o instanceof Eau) {
+						System.out.printf("e");
+					}
+					
+				}
+				else if(o!=null && p!=null) {
+					if(o instanceof Cadavre) {
+						System.out.printf("C");
+					}
+					else if(o instanceof Montagne) {
+						System.out.printf("M");
+					}
+					else if(o instanceof Eau) {
+						System.out.printf("E");
+					}
+				}
 				else {
 					if(c.isSafeForGeant) {
 						System.out.printf("x");
@@ -245,7 +311,7 @@ public class Map {
 						System.out.printf("x");
 					}
 					else {
-						System.out.printf("o");
+						System.out.printf("_");
 					}
 				}
 				System.out.printf(" ");

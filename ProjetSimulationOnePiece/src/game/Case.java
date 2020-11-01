@@ -14,6 +14,11 @@ public class Case {
 		this.isSafeForHommePoisson=sfHo;
 		this.isSafeForGeant=sfGe;
 	}
+	
+	public boolean isSafeForSomeone() {
+		if(this.isSafeForHumain || this.isSafeForNain || this.isSafeForHommePoisson || this.isSafeForGeant) return true;
+		else return false;
+	}
 
 	public Obstacle getObstacle() {
 		return obstacle;

@@ -1,5 +1,5 @@
 package game;
 
-public class Cadavre {
+public class Cadavre extends Obstacle{
 
 }
