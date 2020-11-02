@@ -3,19 +3,17 @@ package game;
 import java.util.ArrayList;
 
 public class Humains extends Pirate {
-
 	public Humains() {
 	}
 	@Override
 	public void move(Map m) {
-		// TODO Auto-generated method stub
 		Case nextMove = selectNextMove(m);
 		
 		
 		if(nextMove!=null) {
 			if(nextMove.getObstacle()!=null && nextMove.getObstacle() instanceof Poneglyphe) {
 				Poneglyphe poneglyphe = (Poneglyphe)nextMove.getObstacle();
-				this.poneglyphes.add(poneglyphe);
+				this.currentPoneglyphe=poneglyphe;
 				System.out.println("Humain : Poneglyphe " + poneglyphe.getId() + " recupéré.");
 			}
 			else if(nextMove.getPersonnage()==null) {
@@ -25,6 +23,7 @@ public class Humains extends Pirate {
 				System.out.println("FONCTION RENCONTRE");
 			}
 		}
+		this.updatePoneglyphe(m);
 
 	}
 
@@ -69,10 +68,10 @@ public class Humains extends Pirate {
 						}
 						else if(currentCase.getPersonnage() instanceof Maitre_Humain) {
 							Maitre_Humain maitre = (Maitre_Humain) currentCase.getPersonnage();
-							maitre.addPoneglyphe(this.poneglyphes.get(0));
+							maitre.addPoneglyphe(this.currentPoneglyphe);
 							
-							System.out.println("Humain : Poneglyphe "+this.poneglyphes.get(0).getId()+" a la base!");
-							this.poneglyphes.remove(0);
+							System.out.println("Humain : Poneglyphe "+this.currentPoneglyphe.getId()+" a la base!");
+							this.currentPoneglyphe=null;
 						}
 					}
 				}
@@ -80,8 +79,9 @@ public class Humains extends Pirate {
 		}
 		return availableCases;
 	}
+	
 	private Case selectNextMove(Map m) {
-		if(this.poneglyphes.size()!=0) {
+		if(this.currentPoneglyphe!=null) {
 			ArrayList<Case> moves = this.goBack(m);
 			if(moves.size()==1) {
 				return moves.get(0);
@@ -116,6 +116,13 @@ public class Humains extends Pirate {
 		y = this.c.getPosY();
 		m.getCase(x,y).setPersonnage(this);
 	}
+	
+	private void updatePoneglyphe(Map m) {
+		if(this.isInSafeZone(m)) {
+			Maitre_Humain master = getMaster(m);
+			this.poneglyphes = (ArrayList<Poneglyphe>) master.poneglyphes.clone();
+		}
+	}
 
 	@Override
 	public void attaquer() {
@@ -142,5 +149,15 @@ public class Humains extends Pirate {
 		// TODO Auto-generated method stub
 		if(this.c.getPosX() < m.TAILLE_SAFE_ZONE && this.c.getPosY() < m.TAILLE_SAFE_ZONE) return true;
 		else return false;
+	}
+	
+	private Maitre_Humain getMaster(Map m) {
+		for(Personnage master : m.maitres) {
+			if(master instanceof Maitre_Humain) {
+				return (Maitre_Humain) master;
+			}
+		}
+		System.out.println("Maitre Humain manquant !!");
+		return null;
 	}
 }

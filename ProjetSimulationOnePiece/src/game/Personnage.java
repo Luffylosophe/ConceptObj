@@ -6,6 +6,7 @@ public abstract class Personnage {
 	Case c;
 	int PV, PM, PE, PA;
 	protected ArrayList<Poneglyphe> poneglyphes = new ArrayList<Poneglyphe>();
+	protected Poneglyphe currentPoneglyphe=null;
 	
 	public abstract void move(Map m); // fonction qui permet de se deplacer sur la map
 	public abstract void attaquer(); // fonction qui permet d'attaquer un personnage
