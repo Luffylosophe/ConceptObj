@@ -22,7 +22,6 @@ public class Hommes_Poissons extends Marine {
 			}
 		}
 		this.updatePoneglyphe(m);
-		System.out.println(this.currentPoneglyphe);
 	}
 	
 
