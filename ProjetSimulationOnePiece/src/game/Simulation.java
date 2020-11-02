@@ -11,6 +11,7 @@ public class Simulation {
 		Map sim = new Map();
 		while(hasWon(sim)==false){
 			update(sim);
+			sim.printEtatPartie();
 			try {
 				java.util.concurrent.TimeUnit.SECONDS.sleep(pas);
 			} catch (InterruptedException e) {

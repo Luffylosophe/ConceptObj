@@ -9,7 +9,6 @@ public class Humains extends Pirate {
 	public void move(Map m) {
 		Case nextMove = selectNextMove(m);
 		
-		
 		if(nextMove!=null) {
 			if(nextMove.getObstacle()!=null && nextMove.getObstacle() instanceof Poneglyphe) {
 				Poneglyphe poneglyphe = (Poneglyphe)nextMove.getObstacle();
@@ -36,18 +35,21 @@ public class Humains extends Pirate {
 				if(i>=0 && j>=0 && i<m.TAILLE_MAP && j<m.TAILLE_MAP){
 					if(i!=x || j!=y) {			// Oblige a bouger
 						Case currentCase=m.getCase(i, j);
-						if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
-							availableCases.add(currentCase);
-						}
-						else if(currentCase.getObstacle() instanceof Poneglyphe && this.poneglyphes.size()==0) {
-							ArrayList<Case> onlyIssue = new ArrayList<Case>();
-							onlyIssue.add(currentCase);
-							return onlyIssue;
-						}
-						else if(currentCase.getPersonnage()!=null && currentCase.getObstacle()==null) {
-							availableCases.add(currentCase);
-						}
-						//ajouter les autres cas de figure
+						// Empeche d'aller dans les safes zone enemies
+						if(!currentCase.isSafeForGeant && !currentCase.isSafeForHommePoisson && !currentCase.isSafeForNain) {
+							if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
+								availableCases.add(currentCase);
+							}
+							else if(currentCase.getObstacle() instanceof Poneglyphe && this.currentPoneglyphe==null) {
+								ArrayList<Case> onlyIssue = new ArrayList<Case>();
+								onlyIssue.add(currentCase);
+								return onlyIssue;
+							}
+							else if(currentCase.getPersonnage()!=null && currentCase.getObstacle()==null) {
+								availableCases.add(currentCase);
+							}
+							//ajouter les autres cas de figure
+						}						
 					}
 				}
 			}
@@ -77,6 +79,9 @@ public class Humains extends Pirate {
 				}
 			}
 		}
+		if(availableCases.isEmpty()) {
+			return this.getPossibleMoves(m);
+		}
 		return availableCases;
 	}
 	
@@ -104,8 +109,6 @@ public class Humains extends Pirate {
 			else return null;
 		}
 	}
-	
-	
 	
 	private void updatePosition(Map m,Case nextCase) {
 		int x = this.c.getPosX();

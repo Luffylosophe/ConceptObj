@@ -333,5 +333,21 @@ public class Map {
 		
 	}
 	
-	
+	public void printEtatPartie() {
+		for(Personnage master : this.maitres) {
+			int nbPoneglyphe=master.poneglyphes.size();
+			if(master instanceof Maitre_Humain) {
+				System.out.println("Humain : " + nbPoneglyphe + " poneglyphe(s).");
+			}
+			else if(master instanceof Maitre_Homme_Poisson) {
+				System.out.println("Hommes-poissons : " + nbPoneglyphe + " poneglyphe(s).");
+			}
+			else if(master instanceof Maitre_Nain) {
+				System.out.println("Nains : " + nbPoneglyphe + " poneglyphe(s).");
+			}
+			else {
+				System.out.println("Géants : " + nbPoneglyphe + " poneglyphe(s).");
+			}			
+		}
+	}
 }
