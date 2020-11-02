@@ -17,7 +17,7 @@ public class Simulation {
 			//sim.printEtatPartie(); 	// permet de voir qui a cb de poneglyphe
 			try {
 				//java.util.concurrent.TimeUnit.SECONDS.sleep(pas);
-				java.util.concurrent.TimeUnit.MILLISECONDS.sleep(400);
+				java.util.concurrent.TimeUnit.MILLISECONDS.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -104,16 +104,16 @@ public class Simulation {
 						int place=j-13;
 						
 						if(place%3==1) {
-							try {
-								if(master.poneglyphes.get(id-1).getId()==id) {
+
+							boolean set=false;
+							for(Poneglyphe p : master.poneglyphes) {
+								if(p.getId() == id) {
 									System.out.printf("X");
+									set=true;
 								}
-								else System.out.printf(" ");
-								id++;
 							}
-							catch(Exception e) {
-								System.out.printf(" ");
-							}
+							if(!set) System.out.printf(" ");
+							id++;
 
 						}
 						else {
@@ -136,16 +136,16 @@ public class Simulation {
 		for(Personnage p : sim.maitres) {
 			if(p.getPoneglyphesArray().size()==sim.NB_PONEGLYPHES) {
 				if(p instanceof Maitre_Humain) {
-					return "*    Victoire des humains !    *";
+					return "    *    Victoire des humains !    *";
 				}
 				else if(p instanceof Maitre_Homme_Poisson) {
-					return "*    Victoire des hommes-poissons !    *";
+					return "    *    Victoire des hommes-poissons !    *";
 				}
 				else if(p instanceof Maitre_Nain) {
-					return "*    Victoire des nains !    *";
+					return "    *    Victoire des nains !    *";
 				}
 				else {
-					return "*   Victoire des géants !    *";
+					return "    *   Victoire des géants !    *";
 				}
 			}
 		}
