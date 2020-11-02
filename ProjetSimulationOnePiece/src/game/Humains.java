@@ -10,16 +10,20 @@ public class Humains extends Pirate {
 	public void move(Map m) {
 		// TODO Auto-generated method stub
 		Case nextMove = selectNextMove(m);
+		
+		
 		if(nextMove!=null) {
 			if(nextMove.getObstacle()!=null && nextMove.getObstacle() instanceof Poneglyphe) {
 				Poneglyphe poneglyphe = (Poneglyphe)nextMove.getObstacle();
 				this.poneglyphes.add(poneglyphe);
 				System.out.println("Humain : Poneglyphe " + poneglyphe.getId() + " recupéré.");
 			}
-			else if(nextMove.getPersonnage()==null && nextMove!=null) {
+			else if(nextMove.getPersonnage()==null) {
 				this.updatePosition(m,nextMove);
 			}
-			
+			else if(nextMove.getPersonnage()!=null && nextMove.getObstacle()==null) {
+				System.out.println("FONCTION RENCONTRE");
+			}
 		}
 
 	}
@@ -40,6 +44,9 @@ public class Humains extends Pirate {
 							ArrayList<Case> onlyIssue = new ArrayList<Case>();
 							onlyIssue.add(currentCase);
 							return onlyIssue;
+						}
+						else if(currentCase.getPersonnage()!=null && currentCase.getObstacle()==null) {
+							availableCases.add(currentCase);
 						}
 						//ajouter les autres cas de figure
 					}
@@ -66,7 +73,6 @@ public class Humains extends Pirate {
 							
 							System.out.println("Humain : Poneglyphe "+this.poneglyphes.get(0).getId()+" a la base!");
 							this.poneglyphes.remove(0);
-							
 						}
 					}
 				}

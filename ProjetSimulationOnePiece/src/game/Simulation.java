@@ -4,7 +4,6 @@ public class Simulation {
 
 	public static void main(String[] args) {
 		startSimulation(1);
-		// TODO Auto-generated method stub
 
 	}
 	private static void startSimulation(int pas) {

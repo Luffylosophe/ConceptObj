@@ -17,7 +17,7 @@ public class Map {
 	private ArrayList<Geant> geants = new ArrayList<Geant>();
 	private ArrayList<Eau> eaux = new ArrayList<Eau>();
 	private ArrayList<Montagne> montagnes = new ArrayList<Montagne>();
-	private ArrayList<Cadavre> cadavre = new ArrayList<Cadavre>();
+	private ArrayList<Cadavre> cadavres = new ArrayList<Cadavre>();
 	public ArrayList<Personnage> maitres = new ArrayList<Personnage>();
 	
 	// Listes générales
