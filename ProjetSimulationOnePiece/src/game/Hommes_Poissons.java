@@ -3,6 +3,12 @@ package game;
 import java.util.ArrayList;
 
 public class Hommes_Poissons extends Marine {
+	
+	public Hommes_Poissons() {
+		this.PA = 5;
+		this.PV = 100;
+		this.PE = 5;
+	}
 
 	@Override
 	public void move(Map m) {
@@ -117,10 +123,36 @@ public class Hommes_Poissons extends Marine {
 		m.getCase(x,y).setPersonnage(this);
 	}
 	@Override
-	public void attaquer() {
-		// TODO Auto-generated method stub
+	public void attaquer(Case cible) {
+		Class race = cible.getPersonnage().getClass();
+		int ciblepv = cible.getPersonnage().getPV();
+		// on cherche les données sur la cible
 		
-	}
+		if (this.PA > 0) {
+			System.out.println("Un "+this.getClass()+" attaque un "+race);
+			ciblepv = ciblepv - 20;
+			cible.getPersonnage().setPV(ciblepv);
+			this.setPA(this.PA-1);
+		// si on a assez de point d'attaque la cible se voit infligé des degats et on perd 1 PA
+		}
+		
+		else 
+		{
+			System.out.println(this.getClass()+" : Je ne peux pas attaquer");
+			// One ne peut pas attaquer
+		}
+			if (ciblepv == 0) {
+				System.out.println("FONCTION MOURIR");
+				//on fait appel à la fonction mouir
+			}
+			else {
+				System.out.println(" Il reste encore "+cible.getPersonnage().getPV()+" point de vie au "+race);
+				
+			}
+			
+		}
+		
+	
 
 	@Override
 	public void parler() {
