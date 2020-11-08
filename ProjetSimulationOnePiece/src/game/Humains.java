@@ -19,13 +19,12 @@ public class Humains extends Pirate {
 				this.updatePosition(m,nextMove);
 			}
 			else if(nextMove.getPersonnage()!=null && nextMove.getObstacle()==null) {
-				System.out.println("FONCTION RENCONTRE");
+				this.rencontre(nextMove);
 			}
 		}
 		this.updatePoneglyphe(m);
-
 	}
-
+	
 	private ArrayList<Case> getPossibleMoves(Map m){
 		ArrayList<Case> availableCases = new ArrayList<Case>();
 		int x = c.getPosX();
@@ -46,7 +45,9 @@ public class Humains extends Pirate {
 								return onlyIssue;
 							}
 							else if(currentCase.getPersonnage()!=null && currentCase.getObstacle()==null) {
-								availableCases.add(currentCase);
+								if(currentCase.getPersonnage().isInFight==false) {
+									availableCases.add(currentCase);
+								}
 							}
 							//ajouter les autres cas de figure
 						}						
@@ -131,14 +132,14 @@ public class Humains extends Pirate {
 	public void attaquer(Case cible) {
 		Class race = cible.getPersonnage().getClass();
 		int ciblepv = cible.getPersonnage().getPV();
-		// on cherche les données sur la cible
+		// on cherche les donnï¿½es sur la cible
 		
 		if (this.PA > 0) {
 			System.out.println("Un "+this.getClass()+" attaque un "+race);
 			ciblepv = ciblepv - 10;
 			cible.getPersonnage().setPV(ciblepv);
 			this.setPA(this.PA-1);
-		// si on a assez de point d'attaque la cible se voit infligé des degats et on perd 1 PA
+		// si on a assez de point d'attaque la cible se voit infligï¿½ des degats et on perd 1 PA
 		}
 		
 		else 
@@ -148,7 +149,7 @@ public class Humains extends Pirate {
 		}
 			if (ciblepv == 0) {
 				System.out.println("FONCTION MOURIR");
-				//on fait appel à la fonction mouir
+				//on fait appel ï¿½ la fonction mouir
 			}
 			else {
 				System.out.println(" Il reste encore "+cible.getPersonnage().getPV()+" point de vie au "+race);
@@ -159,7 +160,7 @@ public class Humains extends Pirate {
 	
 
 	@Override
-	public void parler() {
+	public void parler(Case cible) {
 		// TODO Auto-generated method stub
 		
 	}

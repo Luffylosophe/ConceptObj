@@ -53,6 +53,11 @@ public class Nains extends Pirate {
 						else if(currentCase.getPersonnage()==null && currentCase.getObstacle() instanceof Montagne) {
 							availableCases.add(currentCase);
 						}
+						else if(currentCase.getPersonnage()!=null && currentCase.getObstacle()==null) {
+							if(currentCase.getPersonnage().isInFight==false) {
+								availableCases.add(currentCase);
+							}
+						}
 						//ajouter les autres cas de figure
 					}
 				}
@@ -130,14 +135,14 @@ public class Nains extends Pirate {
 	public void attaquer( Case cible) {
 		Class race = cible.getPersonnage().getClass();
 		int ciblepv = cible.getPersonnage().getPV();
-		// on cherche les données sur la cible
+		// on cherche les donnï¿½es sur la cible
 		
 		if (this.PA > 0) {
 			System.out.println("Un "+this.getClass()+" attaque un "+race);
 			ciblepv = ciblepv - 5;
 			cible.getPersonnage().setPV(ciblepv);
 			this.setPA(this.PA-1);
-		// si on a assez de point d'attaque la cible se voit infligé des degats et on perd 1 PA
+		// si on a assez de point d'attaque la cible se voit infligï¿½ des degats et on perd 1 PA
 		}
 		
 		else 
@@ -147,7 +152,7 @@ public class Nains extends Pirate {
 		}
 			if (ciblepv == 0) {
 				System.out.println("FONCTION MOURIR");
-				//on fait appel à la fonction mouir
+				//on fait appel ï¿½ la fonction mouir
 			}
 			else {
 				System.out.println(" Il reste encore "+cible.getPersonnage().getPV()+" point de vie au "+race);
@@ -157,7 +162,7 @@ public class Nains extends Pirate {
 		}
 
 	@Override
-	public void parler() {
+	public void parler(Case cible) {
 		// TODO Auto-generated method stub
 		
 	}

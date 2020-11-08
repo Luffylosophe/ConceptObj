@@ -8,10 +8,11 @@ public abstract class Personnage {
 	int PV, PM, PE, PA;
 	protected ArrayList<Poneglyphe> poneglyphes = new ArrayList<Poneglyphe>();
 	protected Poneglyphe currentPoneglyphe=null;
+	protected boolean isInFight= false;
 	
 	public abstract void move(Map m); // fonction qui permet de se deplacer sur la map
 	public abstract void attaquer(Case cible); // fonction qui permet d'attaquer un personnage
-	public abstract void parler(); // fonction qui permet d'�changer un message avec un alli�
+	public abstract void parler(Case cible); // fonction qui permet d'�changer un message avec un alli�
 	public abstract void mourir(); // fonction qui cr�e un cadavre l� ou le personnage meurt
 	protected abstract boolean isInSafeZone(Map m);
 	
@@ -47,34 +48,17 @@ public abstract class Personnage {
 	public void setPA(int pA) {
 		PA = pA;
 	}
-	public void rencontre(Personnage attaquant,Personnage defenseur){
-	
-	    
-	    if(attaquant.alignement!=defenseur.alignement){
-	        System.out.println("FONCTION ATTAQUER");
-	    }
+	protected void rencontre(Case target){
+		Personnage p = target.getPersonnage();
+		if( (p instanceof Pirate == this instanceof Pirate) || (p instanceof Marine == this instanceof Marine)) {
+			this.parler(target);
+		}
+		else {
+			this.attaquer(target);
+			this.isInFight=true;
+			target.getPersonnage().isInFight=true;
+		}
 
-	    if(attaquant.alignement==defenseur.alignement && (attaquant.getClass()==defenseur.getClass())){
-	        for(Poneglyphe poneglyphe : attaquant.getPoneglyphesArray()){
-	            defenseur.addPoneglyphe(poneglyphe) ;
-	        }
-	        for(Poneglyphe poneglyphe : defenseur.getPoneglyphesArray()){
-	            attaquant.addPoneglyphe(poneglyphe) ;
-	        }
-	    }
-
-	    if(attaquant.alignement==defenseur.alignement && (attaquant.getClass()!=defenseur.getClass())){
-	        for (int i = 0; i < ((attaquant.getPoneglyphesArray().size())-Utilitaires.randInt(0,(attaquant.getPoneglyphesArray().size())-1)); i++) {
-	            defenseur.addPoneglyphe(attaquant.getPoneglyphesArray().get(i)) ;
-	        }
-	        for (int i = 0; i < ((defenseur.getPoneglyphesArray().size())-Utilitaires.randInt(0,(defenseur.getPoneglyphesArray().size())-1)); i++) {
-	            attaquant.addPoneglyphe(defenseur.getPoneglyphesArray().get(i)) ;
-	        }
-	    }
-
-	    else {
-	        System.out.println("erreur rencontre");
-	    }
 	}
     
 }
