@@ -11,8 +11,11 @@ public abstract class Personnage {
 	
 	public abstract void move(Map m); // fonction qui permet de se deplacer sur la map
 	public abstract void attaquer(Case cible); // fonction qui permet d'attaquer un personnage
-	
+	protected abstract ArrayList<Case> getPossibleMoves(Map m);
+	protected abstract ArrayList<Case> goBack(Map m);
 	protected abstract boolean isInSafeZone(Map m);
+	
+	
 	protected void mourir(Map map) { // fonction qui cr�e un cadavre l� ou le personnage meurt
 		map.personnages.remove(this);
 		if(this instanceof Humains) {
@@ -92,5 +95,56 @@ public abstract class Personnage {
 		}
 
 	}
+	
+	protected Case selectNextMove(Map m) {
+		if(this.currentPoneglyphe!=null) {
+			ArrayList<Case> moves = this.goBack(m);
+			if(moves.size()==1) {
+				return moves.get(0);
+			}
+			else if(moves.size()!=0) {
+				return moves.get(Utilitaires.randInt(0, moves.size()-1));
+			}
+			else {
+				return null;
+			}
+		}
+		//else if(this.PE <= m.TAILLE_MAP/2){
+			//ArrayList<Case> moves = this.goBack(m);
+			//if(moves.size()==1) {
+				//return moves.get(0);
+			//}
+			//else if(moves.size()!=0) {
+				//return moves.get(Utilitaires.randInt(0, moves.size()-1));
+			//}
+			//else {
+				//return null;
+			//}
+		//}
+		else {
+			ArrayList<Case> moves = getPossibleMoves(m);
+			if(moves.size()==1) {
+				return moves.get(0);
+			}
+			else if(moves.size()!=0) {
+				return moves.get(Utilitaires.randInt(0, moves.size()-1));
+			}
+			else return null;
+		}
+	}
+	
+	protected void updatePosition(Map m,Case nextCase) {
+		int x = this.c.getPosX();
+		int y = this.c.getPosY();
+		m.getCase(x,y).setPersonnage(null);
+		this.setCase(nextCase);
+		x = this.c.getPosX();
+		y = this.c.getPosY();
+		m.getCase(x,y).setPersonnage(this);
+	}
+	protected void setCase(Case nextCase) {
+		this.c=nextCase;
+	}
+	
     
 }

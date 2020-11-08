@@ -25,7 +25,7 @@ public class Humains extends Pirate {
 		this.updatePoneglyphe(m);
 	}
 	
-	private ArrayList<Case> getPossibleMoves(Map m){
+	protected ArrayList<Case> getPossibleMoves(Map m){
 		ArrayList<Case> availableCases = new ArrayList<Case>();
 		int x = c.getPosX();
 		int y = c.getPosY();
@@ -57,7 +57,7 @@ public class Humains extends Pirate {
 		return availableCases;
 	}
 	
-	private ArrayList<Case> goBack(Map m){
+	protected ArrayList<Case> goBack(Map m){
 		ArrayList<Case> availableCases = new ArrayList<Case>();
 		int x = c.getPosX();
 		int y = c.getPosY();
@@ -86,40 +86,7 @@ public class Humains extends Pirate {
 		return availableCases;
 	}
 	
-	private Case selectNextMove(Map m) {
-		if(this.currentPoneglyphe!=null) {
-			ArrayList<Case> moves = this.goBack(m);
-			if(moves.size()==1) {
-				return moves.get(0);
-			}
-			else if(moves.size()!=0) {
-				return moves.get(Utilitaires.randInt(0, moves.size()-1));
-			}
-			else {
-				return null;
-			}
-		}
-		else {
-			ArrayList<Case> moves = getPossibleMoves(m);
-			if(moves.size()==1) {
-				return moves.get(0);
-			}
-			else if(moves.size()!=0) {
-				return moves.get(Utilitaires.randInt(0, moves.size()-1));
-			}
-			else return null;
-		}
-	}
-	
-	private void updatePosition(Map m,Case nextCase) {
-		int x = this.c.getPosX();
-		int y = this.c.getPosY();
-		m.getCase(x,y).setPersonnage(null);
-		this.setCase(nextCase);
-		x = this.c.getPosX();
-		y = this.c.getPosY();
-		m.getCase(x,y).setPersonnage(this);
-	}
+
 	
 	private void updatePoneglyphe(Map m) {
 		
@@ -161,10 +128,6 @@ public class Humains extends Pirate {
 		}
 	
 
-
-	public void setCase(Case c) {
-		this.c=c;
-	}
 	@Override
 	protected boolean isInSafeZone(Map m) {
 		// TODO Auto-generated method stub
