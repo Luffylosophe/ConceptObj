@@ -26,7 +26,7 @@ public class Nains extends Pirate {
 				this.updatePosition(m,nextMove);
 			}
 			else if(nextMove.getPersonnage()!=null && nextMove.getObstacle()==null) {
-				System.out.println("FONCTION RENCONTRE");
+				this.rencontre(nextMove);
 			}
 		}
 		this.updatePoneglyphe(m);
@@ -167,11 +167,6 @@ public class Nains extends Pirate {
 		
 	}
 
-	@Override
-	public void mourir() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public void setCase(Case c) {
 		this.c=c;

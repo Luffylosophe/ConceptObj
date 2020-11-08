@@ -161,15 +161,10 @@ public class Humains extends Pirate {
 
 	@Override
 	public void parler(Case cible) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
-	@Override
-	public void mourir() {
-		// TODO Auto-generated method stub
-		
-	}
 	public void setCase(Case c) {
 		this.c=c;
 	}

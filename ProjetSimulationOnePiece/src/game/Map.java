@@ -11,13 +11,13 @@ public class Map {
 	// --------------------------------------------------------------------
 	// Listes spécifiques
 	
-	private ArrayList<Humains> humains = new ArrayList<Humains>();
-	private ArrayList<Nains> nains = new ArrayList<Nains>();
-	private ArrayList<Hommes_Poissons> homme_poissons = new ArrayList<Hommes_Poissons>();
-	private ArrayList<Geant> geants = new ArrayList<Geant>();
-	private ArrayList<Eau> eaux = new ArrayList<Eau>();
-	private ArrayList<Montagne> montagnes = new ArrayList<Montagne>();
-	private ArrayList<Cadavre> cadavres = new ArrayList<Cadavre>();
+	public ArrayList<Humains> humains = new ArrayList<Humains>();
+	public ArrayList<Nains> nains = new ArrayList<Nains>();
+	public ArrayList<Hommes_Poissons> homme_poissons = new ArrayList<Hommes_Poissons>();
+	public ArrayList<Geant> geants = new ArrayList<Geant>();
+	public ArrayList<Eau> eaux = new ArrayList<Eau>();
+	public ArrayList<Montagne> montagnes = new ArrayList<Montagne>();
+	public ArrayList<Cadavre> cadavres = new ArrayList<Cadavre>();
 	public ArrayList<Personnage> maitres = new ArrayList<Personnage>();
 	
 	// Listes générales
