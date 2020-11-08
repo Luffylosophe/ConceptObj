@@ -11,7 +11,6 @@ public abstract class Personnage {
 	
 	public abstract void move(Map m); // fonction qui permet de se deplacer sur la map
 	public abstract void attaquer(Case cible); // fonction qui permet d'attaquer un personnage
-	public abstract void parler(Case cible); // fonction qui permet d'�changer un message avec un alli�
 	
 	protected abstract boolean isInSafeZone(Map m);
 	protected void mourir(Map map) { // fonction qui cr�e un cadavre l� ou le personnage meurt
@@ -34,6 +33,20 @@ public abstract class Personnage {
 		map.obstacles.add(cadavre);
 		map.cadavres.add(cadavre);
 		
+	}
+	// Echange poneglyphes avec alliés
+	protected void parler(Case target) {
+		Personnage personnage = target.getPersonnage();
+		for(Poneglyphe poneglyphe : personnage.poneglyphes) {
+			if(this.poneglyphes.contains(poneglyphe)==false) {
+				this.poneglyphes.add(poneglyphe);
+			}
+		}
+		for(Poneglyphe poneglyphe : this.poneglyphes) {
+			if(personnage.poneglyphes.contains(poneglyphe)==false) {
+				personnage.poneglyphes.add(poneglyphe);
+			}
+		}
 	}
     public void addPoneglyphe(Poneglyphe p) {
     	if(this.poneglyphes.contains(p)==false) {

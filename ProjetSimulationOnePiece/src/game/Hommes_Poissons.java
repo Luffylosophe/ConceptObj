@@ -157,13 +157,6 @@ public class Hommes_Poissons extends Marine {
 			
 		}
 		
-	
-
-	@Override
-	public void parler(Case cible) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void setCase(Case c) {
 		this.c=c;

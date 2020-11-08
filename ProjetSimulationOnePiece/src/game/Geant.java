@@ -156,11 +156,6 @@ public class Geant extends Marine {
 			
 		}
 
-	@Override
-	public void parler(Case target) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void setCase(Case c) {
 		this.c=c;

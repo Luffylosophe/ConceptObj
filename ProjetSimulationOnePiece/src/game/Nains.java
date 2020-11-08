@@ -161,11 +161,7 @@ public class Nains extends Pirate {
 			
 		}
 
-	@Override
-	public void parler(Case cible) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	
 	public void setCase(Case c) {

@@ -122,10 +122,12 @@ public class Humains extends Pirate {
 	}
 	
 	private void updatePoneglyphe(Map m) {
+		
 		if(this.isInSafeZone(m)) {
 			Maitre_Humain master = getMaster(m);
 			this.poneglyphes = (ArrayList<Poneglyphe>) master.poneglyphes.clone();
 		}
+		
 	}
 
 	@Override
@@ -159,11 +161,6 @@ public class Humains extends Pirate {
 		}
 	
 
-	@Override
-	public void parler(Case cible) {
-		
-		
-	}
 
 	public void setCase(Case c) {
 		this.c=c;
