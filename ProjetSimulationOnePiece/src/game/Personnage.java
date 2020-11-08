@@ -17,7 +17,7 @@ public abstract class Personnage {
 	
 	
 	protected void mourir(Map map) { // fonction qui cr�e un cadavre l� ou le personnage meurt
-		map.personnages.remove(this);
+		
 		if(this instanceof Humains) {
 			map.humains.remove(this);
 		}
@@ -109,18 +109,18 @@ public abstract class Personnage {
 				return null;
 			}
 		}
-		//else if(this.PE <= m.TAILLE_MAP/2){
-			//ArrayList<Case> moves = this.goBack(m);
-			//if(moves.size()==1) {
-				//return moves.get(0);
-			//}
-			//else if(moves.size()!=0) {
-				//return moves.get(Utilitaires.randInt(0, moves.size()-1));
-			//}
-			//else {
-				//return null;
-			//}
-		//}
+		else if(this.PE <= m.TAILLE_MAP/2){
+			ArrayList<Case> moves = this.goBack(m);
+			if(moves.size()==1) {
+				return moves.get(0);
+			}
+			else if(moves.size()!=0) {
+				return moves.get(Utilitaires.randInt(0, moves.size()-1));
+			}
+			else {
+				return null;
+			}
+		}
 		else {
 			ArrayList<Case> moves = getPossibleMoves(m);
 			if(moves.size()==1) {
@@ -141,9 +141,19 @@ public abstract class Personnage {
 		x = this.c.getPosX();
 		y = this.c.getPosY();
 		m.getCase(x,y).setPersonnage(this);
+		this.PE--;
 	}
 	protected void setCase(Case nextCase) {
 		this.c=nextCase;
+	}
+	protected void restorePE(Map m) {
+		if(this.isInSafeZone(m) && this.PE != 25) this.PE++;
+	}
+	protected void noMorePE(Map m) {
+		if(this.PE==0) {
+			System.out.println("MEURS!");
+			this.mourir(m);
+		}
 	}
 	
     

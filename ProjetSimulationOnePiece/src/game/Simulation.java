@@ -34,8 +34,58 @@ public class Simulation {
 			p.move(sim);
 			
 		}
+		removeDeadPersonnages(sim);
 		sim.shuffleCharacters();
 		sim.printMap();
+	}
+	
+	private static void removeDeadPersonnages(Map sim) {
+		ArrayList<Personnage> personnagesToDelete = new ArrayList<Personnage>();
+		for(Personnage p : sim.personnages) {
+			if(p instanceof Humains) {
+				if(sim.humains.contains(p)==false) {
+					personnagesToDelete.add(p);
+				}
+			}
+			else if(p instanceof Nains) {
+				if(sim.nains.contains(p)==false) {
+					personnagesToDelete.add(p);
+				}
+			}
+			else if(p instanceof Geant) {
+				if(sim.geants.contains(p)==false) {
+					personnagesToDelete.add(p);
+				}
+			}
+			else {
+				if(sim.homme_poissons.contains(p)==false) {
+					personnagesToDelete.add(p);
+				}
+			}
+		}
+		for(Personnage p : personnagesToDelete) {
+			sim.personnages.remove(p);
+		}
+		for(Humains p : sim.humains) {
+			if(sim.personnages.contains(p)==false) {
+				sim.personnages.remove(p);
+			}
+		}
+		for(Nains p : sim.nains) {
+			if(sim.personnages.contains(p)==false) {
+				sim.personnages.remove(p);
+			}
+		}
+		for(Hommes_Poissons p : sim.homme_poissons) {
+			if(sim.personnages.contains(p)==false) {
+				sim.personnages.remove(p);
+			}
+		}
+		for(Geant p : sim.geants) {
+			if(sim.personnages.contains(p)==false) {
+				sim.personnages.remove(p);
+			}
+		}
 	}
 	
 	private static boolean hasWon(Map sim) {

@@ -7,12 +7,13 @@ public class Geant extends Marine {
 	public Geant() {
 		this.PA = 5;
 		this.PV = 100;
-		this.PE = 5;
+		this.PE = 25;
 	}
 
 	@Override
 	public void move(Map m) {
 		Case nextMove = selectNextMove(m);
+		this.restorePE(m);
 		
 		if(nextMove!=null) {
 			if(nextMove.getObstacle()!=null && nextMove.getObstacle() instanceof Poneglyphe) {
@@ -28,6 +29,7 @@ public class Geant extends Marine {
 			}
 		}
 		this.updatePoneglyphe(m);
+		this.noMorePE(m);
 	}
 
 	protected ArrayList<Case> getPossibleMoves(Map m){
@@ -75,7 +77,7 @@ public class Geant extends Marine {
 						if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
 							availableCases.add(currentCase);
 						}
-						else if(currentCase.getPersonnage() instanceof Maitre_Geant) {
+						else if(currentCase.getPersonnage() instanceof Maitre_Geant && this.currentPoneglyphe!=null) {
 							Maitre_Geant maitre = (Maitre_Geant) currentCase.getPersonnage();
 							maitre.addPoneglyphe(this.currentPoneglyphe);
 							

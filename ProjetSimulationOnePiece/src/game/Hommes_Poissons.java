@@ -7,12 +7,13 @@ public class Hommes_Poissons extends Marine {
 	public Hommes_Poissons() {
 		this.PA = 5;
 		this.PV = 100;
-		this.PE = 5;
+		this.PE = 25;
 	}
 
 	@Override
 	public void move(Map m) {
 		Case nextMove = selectNextMove(m);
+		this.restorePE(m);
 		
 		if(nextMove!=null) {
 			if(nextMove.getObstacle()!=null && nextMove.getObstacle() instanceof Poneglyphe) {
@@ -28,6 +29,7 @@ public class Hommes_Poissons extends Marine {
 			}
 		}
 		this.updatePoneglyphe(m);
+		this.noMorePE(m);
 	}
 	
 
@@ -77,7 +79,7 @@ public class Hommes_Poissons extends Marine {
 						if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
 							availableCases.add(currentCase);
 						}
-						else if(currentCase.getPersonnage() instanceof Maitre_Homme_Poisson) {
+						else if(currentCase.getPersonnage() instanceof Maitre_Homme_Poisson && this.currentPoneglyphe!=null) {
 							Maitre_Homme_Poisson maitre = (Maitre_Homme_Poisson) currentCase.getPersonnage();
 							maitre.addPoneglyphe(this.currentPoneglyphe);
 							

@@ -4,11 +4,15 @@ import java.util.ArrayList;
 
 public class Humains extends Pirate {
 	public Humains() {
+		this.PA = 5;
+		this.PV = 100;
+		this.PE = 25;
 	}
 	@Override
 	public void move(Map m) {
 		Case nextMove = selectNextMove(m);
-		
+		System.out.println(this.PE);
+		this.restorePE(m);
 		if(nextMove!=null) {
 			if(nextMove.getObstacle()!=null && nextMove.getObstacle() instanceof Poneglyphe) {
 				Poneglyphe poneglyphe = (Poneglyphe)nextMove.getObstacle();
@@ -23,6 +27,7 @@ public class Humains extends Pirate {
 			}
 		}
 		this.updatePoneglyphe(m);
+		this.noMorePE(m);
 	}
 	
 	protected ArrayList<Case> getPossibleMoves(Map m){
@@ -69,7 +74,7 @@ public class Humains extends Pirate {
 						if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
 							availableCases.add(currentCase);
 						}
-						else if(currentCase.getPersonnage() instanceof Maitre_Humain) {
+						else if(currentCase.getPersonnage() instanceof Maitre_Humain && this.currentPoneglyphe!=null) {
 							Maitre_Humain maitre = (Maitre_Humain) currentCase.getPersonnage();
 							maitre.addPoneglyphe(this.currentPoneglyphe);
 							
