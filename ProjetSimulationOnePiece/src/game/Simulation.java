@@ -17,7 +17,7 @@ public class Simulation {
 			//sim.printEtatPartie(); 	// permet de voir qui a cb de poneglyphe
 			try {
 				//java.util.concurrent.TimeUnit.SECONDS.sleep(pas);
-				java.util.concurrent.TimeUnit.MILLISECONDS.sleep(1000);
+				java.util.concurrent.TimeUnit.MILLISECONDS.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

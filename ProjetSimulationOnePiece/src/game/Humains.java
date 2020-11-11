@@ -53,7 +53,7 @@ public class Humains extends Pirate {
 									return onlyIssue;
 								}
 							}
-							else if(currentCase.getObstacle() instanceof Poneglyphe && this.currentPoneglyphe==null) {
+							else if(currentCase.getObstacle() instanceof Poneglyphe && this.currentPoneglyphe==null && !this.poneglyphes.contains(currentCase.getObstacle())) {
 								ArrayList<Case> onlyIssue = new ArrayList<Case>();
 								onlyIssue.add(currentCase);
 								return onlyIssue;
@@ -125,7 +125,7 @@ public class Humains extends Pirate {
 			System.out.println(this.getClass()+" : Je ne peux pas attaquer");
 			// One ne peut pas attaquer
 		}
-			if (ciblepv == 0) {
+			if (ciblepv <= 0) {
 				System.out.println("FONCTION MOURIR");
 				cible.getPersonnage().mourir(m);
 				this.isInFight=false;

@@ -31,8 +31,8 @@ public abstract class Personnage {
 			map.homme_poissons.remove(this);
 		}
 		Cadavre cadavre = new Cadavre();
-		this.c.setObstacle(cadavre);
 		this.c.setPersonnage(null);
+		this.c.setObstacle(cadavre);
 		map.obstacles.add(cadavre);
 		map.cadavres.add(cadavre);
 		
@@ -99,6 +99,7 @@ public abstract class Personnage {
 	}
 	
 	protected Case selectNextMove(Map m) {
+		if(PV<=0) return null;
 		if(this.currentPoneglyphe!=null || this.PE <= m.TAILLE_MAP/2 || this.PA==0) {
 			ArrayList<Case> moves = this.goBack(m);
 			if(moves.size()==1) {
