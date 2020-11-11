@@ -7,7 +7,7 @@ public class Hommes_Poissons extends Marine {
 	public Hommes_Poissons() {
 		this.PA = 5;
 		this.PV = 100;
-		this.PE = 25;
+		this.PE = 30;
 	}
 
 	@Override

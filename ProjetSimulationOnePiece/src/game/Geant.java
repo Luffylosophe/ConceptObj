@@ -7,7 +7,7 @@ public class Geant extends Marine {
 	public Geant() {
 		this.PA = 5;
 		this.PV = 100;
-		this.PE = 25;
+		this.PE = 30;
 	}
 
 	@Override

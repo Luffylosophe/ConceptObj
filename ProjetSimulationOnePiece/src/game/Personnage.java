@@ -147,10 +147,10 @@ public abstract class Personnage {
 		this.c=nextCase;
 	}
 	protected void restorePE(Map m) {
-		if(this.isInSafeZone(m) && this.PE != 25) this.PE++;
+		if(this.isInSafeZone(m) && this.PE < 30) this.PE+=3;
 	}
 	protected void noMorePE(Map m) {
-		if(this.PE==0) {
+		if(this.PE==0 && this.isInSafeZone(m)==false) {
 			System.out.println("MEURS!");
 			this.mourir(m);
 		}

@@ -7,7 +7,7 @@ public class Nains extends Pirate {
 	public Nains() {
 		this.PA = 5;
 		this.PV = 100;
-		this.PE = 25;
+		this.PE = 30;
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class Nains extends Pirate {
 
 	@Override
 	public void attaquer( Case cible) {
-		Class race = cible.getPersonnage().getClass();
+		Class<? extends Personnage> race = cible.getPersonnage().getClass();
 		int ciblepv = cible.getPersonnage().getPV();
 		// on cherche les donn�es sur la cible
 		
@@ -117,6 +117,7 @@ public class Nains extends Pirate {
 			// One ne peut pas attaquer
 		}
 			if (ciblepv == 0) {
+				System.out.println("A cause de coups");
 				System.out.println("FONCTION MOURIR");
 				//on fait appel � la fonction mouir
 			}
