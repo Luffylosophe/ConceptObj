@@ -10,7 +10,7 @@ public abstract class Personnage {
 	protected boolean isInFight= false;
 	
 	public abstract void move(Map m); // fonction qui permet de se deplacer sur la map
-	public abstract void attaquer(Case cible); // fonction qui permet d'attaquer un personnage
+	public abstract void attaquer(Map m, Case cible); // fonction qui permet d'attaquer un personnage
 	protected abstract ArrayList<Case> getPossibleMoves(Map m);
 	protected abstract ArrayList<Case> goBack(Map m);
 	protected abstract boolean isInSafeZone(Map m);
@@ -83,33 +83,23 @@ public abstract class Personnage {
 	public void setPA(int pA) {
 		PA = pA;
 	}
-	protected void rencontre(Case target){
+	protected void rencontre(Map m, Case target){
 		Personnage p = target.getPersonnage();
 		if( (p instanceof Pirate == this instanceof Pirate) || (p instanceof Marine == this instanceof Marine)) {
+			System.out.println("** Partage savoir **");
 			this.parler(target);
 		}
 		else {
-			this.attaquer(target);
+			System.out.println("** Combat! **");
 			this.isInFight=true;
 			target.getPersonnage().isInFight=true;
+			this.attaquer(m, target);
 		}
 
 	}
 	
 	protected Case selectNextMove(Map m) {
-		if(this.currentPoneglyphe!=null) {
-			ArrayList<Case> moves = this.goBack(m);
-			if(moves.size()==1) {
-				return moves.get(0);
-			}
-			else if(moves.size()!=0) {
-				return moves.get(Utilitaires.randInt(0, moves.size()-1));
-			}
-			else {
-				return null;
-			}
-		}
-		else if(this.PE <= m.TAILLE_MAP/2){
+		if(this.currentPoneglyphe!=null || this.PE <= m.TAILLE_MAP/2 || this.PA==0) {
 			ArrayList<Case> moves = this.goBack(m);
 			if(moves.size()==1) {
 				return moves.get(0);
@@ -148,6 +138,7 @@ public abstract class Personnage {
 	}
 	protected void restorePE(Map m) {
 		if(this.isInSafeZone(m) && this.PE < 30) this.PE+=3;
+		if(this.isInSafeZone(m) && this.PA < 5) this.PA+=1;
 	}
 	protected void noMorePE(Map m) {
 		if(this.PE==0 && this.isInSafeZone(m)==false) {

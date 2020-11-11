@@ -25,7 +25,7 @@ public class Hommes_Poissons extends Marine {
 				this.updatePosition(m,nextMove);
 			}
 			else if(nextMove.getPersonnage()!=null && nextMove.getObstacle()==null) {
-				this.rencontre(nextMove);
+				this.rencontre(m, nextMove);
 			}
 		}
 		this.updatePoneglyphe(m);
@@ -40,25 +40,32 @@ public class Hommes_Poissons extends Marine {
 		for(int i = x-1; i <= x+1; i++) {
 			for(int j = y -1; j <= y+1; j++) {
 				if(i>=0 && j>=0 && i<m.TAILLE_MAP && j<m.TAILLE_MAP){
-					Case currentCase=m.getCase(i, j);
-					if(!currentCase.isSafeForGeant && !currentCase.isSafeForHumain && !currentCase.isSafeForNain) {
-						if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
-							availableCases.add(currentCase);
-						}
-						else if(currentCase.getObstacle() instanceof Poneglyphe && this.currentPoneglyphe==null) {
-							ArrayList<Case> onlyIssue = new ArrayList<Case>();
-							onlyIssue.add(currentCase);
-							return onlyIssue;
-						}
-						else if(currentCase.getPersonnage()==null && currentCase.getObstacle() instanceof Eau) {
-							availableCases.add(currentCase);
-						}
-						else if(currentCase.getPersonnage()!=null && currentCase.getObstacle()==null) {
-							if(currentCase.getPersonnage().isInFight==false) {
+					if(i!=x || j!=y) {			// Oblige a bouger
+						Case currentCase=m.getCase(i, j);
+						if(!currentCase.isSafeForGeant && !currentCase.isSafeForHumain && !currentCase.isSafeForNain) {
+							if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
 								availableCases.add(currentCase);
 							}
+							else if(currentCase.getPersonnage()!=null && currentCase.getObstacle()==null && this.isInSafeZone(m)==false) {
+								if(currentCase.getPersonnage().isInFight==false) {
+									availableCases.add(currentCase);
+								}
+								else if(currentCase.getPersonnage().isInFight && this.isInFight) {
+									ArrayList<Case> onlyIssue = new ArrayList<Case>();
+									onlyIssue.add(currentCase);
+									return onlyIssue;
+								}
+							}
+							else if(currentCase.getObstacle() instanceof Poneglyphe && this.currentPoneglyphe==null) {
+								ArrayList<Case> onlyIssue = new ArrayList<Case>();
+								onlyIssue.add(currentCase);
+								return onlyIssue;
+							}
+							else if(currentCase.getPersonnage()==null && currentCase.getObstacle() instanceof Eau) {
+								availableCases.add(currentCase);
+							}
+							//ajouter les autres cas de figure
 						}
-						//ajouter les autres cas de figure
 					}
 				}
 			}
@@ -97,32 +104,33 @@ public class Hommes_Poissons extends Marine {
 	}
 
 	@Override
-	public void attaquer(Case cible) {
+	public void attaquer(Map m, Case cible) {
 		Class race = cible.getPersonnage().getClass();
 		int ciblepv = cible.getPersonnage().getPV();
 		// on cherche les donn�es sur la cible
 		
-		if (this.PA > 0) {
+		if (this.PA > 0 && this.PV>0) {
 			System.out.println("Un "+this.getClass()+" attaque un "+race);
 			ciblepv = ciblepv - 20;
 			cible.getPersonnage().setPV(ciblepv);
 			this.setPA(this.PA-1);
 		// si on a assez de point d'attaque la cible se voit inflig� des degats et on perd 1 PA
 		}
-		
-		else 
-		{
+		else {
 			System.out.println(this.getClass()+" : Je ne peux pas attaquer");
+			this.isInFight=false;
 			// One ne peut pas attaquer
 		}
-			if (ciblepv == 0) {
-				System.out.println("FONCTION MOURIR");
-				//on fait appel � la fonction mouir
-			}
-			else {
-				System.out.println(" Il reste encore "+cible.getPersonnage().getPV()+" point de vie au "+race);
-				
-			}
+		if (ciblepv == 0) {
+			System.out.println("FONCTION MOURIR");
+			cible.getPersonnage().mourir(m);
+			this.isInFight=false;
+			//on fait appel � la fonction mouir
+		}
+		else {
+			System.out.println(" Il reste encore "+cible.getPersonnage().getPV()+" point de vie au "+race);
+			
+		}
 			
 	}
 		

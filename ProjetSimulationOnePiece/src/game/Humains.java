@@ -22,7 +22,7 @@ public class Humains extends Pirate {
 				this.updatePosition(m,nextMove);
 			}
 			else if(nextMove.getPersonnage()!=null && nextMove.getObstacle()==null) {
-				this.rencontre(nextMove);
+				this.rencontre(m,nextMove);
 			}
 		}
 		this.updatePoneglyphe(m);
@@ -31,8 +31,8 @@ public class Humains extends Pirate {
 	
 	protected ArrayList<Case> getPossibleMoves(Map m){
 		ArrayList<Case> availableCases = new ArrayList<Case>();
-		int x = c.getPosX();
-		int y = c.getPosY();
+		int x = this.c.getPosX();
+		int y = this.c.getPosY();
 		for(int i = x-1; i <= x+1; i++) {
 			for(int j = y -1; j <= y+1; j++) 
 				if(i>=0 && j>=0 && i<m.TAILLE_MAP && j<m.TAILLE_MAP){
@@ -43,15 +43,20 @@ public class Humains extends Pirate {
 							if(currentCase.getPersonnage()==null && currentCase.getObstacle()==null) {
 								availableCases.add(currentCase);
 							}
+							else if(currentCase.getPersonnage()!=null && currentCase.getObstacle()==null && this.isInSafeZone(m)==false) {
+								if(currentCase.getPersonnage().isInFight==false) {
+									availableCases.add(currentCase);
+								}
+								else if(currentCase.getPersonnage().isInFight && this.isInFight) {
+									ArrayList<Case> onlyIssue = new ArrayList<Case>();
+									onlyIssue.add(currentCase);
+									return onlyIssue;
+								}
+							}
 							else if(currentCase.getObstacle() instanceof Poneglyphe && this.currentPoneglyphe==null) {
 								ArrayList<Case> onlyIssue = new ArrayList<Case>();
 								onlyIssue.add(currentCase);
 								return onlyIssue;
-							}
-							else if(currentCase.getPersonnage()!=null && currentCase.getObstacle()==null) {
-								if(currentCase.getPersonnage().isInFight==false) {
-									availableCases.add(currentCase);
-								}
 							}
 							//ajouter les autres cas de figure
 						}						
@@ -102,12 +107,12 @@ public class Humains extends Pirate {
 	}
 
 	@Override
-	public void attaquer(Case cible) {
+	public void attaquer(Map m,Case cible) {
 		Class race = cible.getPersonnage().getClass();
 		int ciblepv = cible.getPersonnage().getPV();
 		// on cherche les donn�es sur la cible
 		
-		if (this.PA > 0) {
+		if (this.PA > 0 && this.PV>0) {
 			System.out.println("Un "+this.getClass()+" attaque un "+race);
 			ciblepv = ciblepv - 10;
 			cible.getPersonnage().setPV(ciblepv);
@@ -122,6 +127,8 @@ public class Humains extends Pirate {
 		}
 			if (ciblepv == 0) {
 				System.out.println("FONCTION MOURIR");
+				cible.getPersonnage().mourir(m);
+				this.isInFight=false;
 				//on fait appel � la fonction mouir
 			}
 			else {
@@ -134,7 +141,6 @@ public class Humains extends Pirate {
 
 	@Override
 	protected boolean isInSafeZone(Map m) {
-		// TODO Auto-generated method stub
 		if(this.c.getPosX() < m.TAILLE_SAFE_ZONE && this.c.getPosY() < m.TAILLE_SAFE_ZONE) return true;
 		else return false;
 	}
