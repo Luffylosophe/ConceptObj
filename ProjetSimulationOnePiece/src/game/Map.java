@@ -259,17 +259,20 @@ public class Map {
 	
 	private void placePersonnage() {
 		//Creation Humains (On randInt entre 1 et la taille de la safe zone pour eviter de toucher le maître
+		System.out.println("ATTENTION : un nombre d'humains trop proche de la place dans la safe zone risque de ralentir la génération.");
+		System.out.println("Mise en places des humains...");
 		for(Humains h : this.humains) {
-			int x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
-			int y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+			int x=Utilitaires.randInt(0,TAILLE_SAFE_ZONE-1);
+			int y=Utilitaires.randInt(0,TAILLE_SAFE_ZONE-1);
 			while(this.getCase(x,y).getPersonnage()!=null) {
-				x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
-				y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+				x=Utilitaires.randInt(0,TAILLE_SAFE_ZONE-1);
+				y=Utilitaires.randInt(0,TAILLE_SAFE_ZONE-1);
 			}
 			Case currentCase=this.getCase(x, y);
 			h.setCase(currentCase);
 			currentCase.setPersonnage(h);
 		}
+		System.out.println("Mise en places des nains...");
 		for(Nains n : this.nains) {
 			int x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
 			int y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
@@ -281,23 +284,25 @@ public class Map {
 			n.setCase(currentCase);
 			currentCase.setPersonnage(n);
 		}
+		System.out.println("Mise en places des humains...");
 		for(Geant g : this.geants) {
-			int x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+			int x=Utilitaires.randInt(0,TAILLE_SAFE_ZONE-1);
 			int y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
 			while(this.getCase(x,y).getPersonnage()!=null) {
-				x=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+				x=Utilitaires.randInt(0,TAILLE_SAFE_ZONE-1);
 				y=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
 			}
 			Case currentCase=this.getCase(x, y);
 			g.setCase(currentCase);
 			currentCase.setPersonnage(g);
 		}
+		System.out.println("Mise en places des humains...");
 		for(Hommes_Poissons p : this.homme_poissons) {
 			int x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
-			int y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+			int y=Utilitaires.randInt(0,TAILLE_SAFE_ZONE-1);
 			while(this.getCase(x,y).getPersonnage()!=null) {
 				x=Utilitaires.randInt(TAILLE_MAP-TAILLE_SAFE_ZONE,TAILLE_MAP-1);
-				y=Utilitaires.randInt(1,TAILLE_SAFE_ZONE-1);
+				y=Utilitaires.randInt(0,TAILLE_SAFE_ZONE-1);
 			}
 			Case currentCase=this.getCase(x, y);
 			p.setCase(currentCase);
