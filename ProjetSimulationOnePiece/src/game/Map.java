@@ -1,6 +1,7 @@
 package game;
 
 import java.util.Random;
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -27,18 +28,18 @@ public class Map {
 	
 	// --------------------------------------------------------------------
 	
-	public final int TAILLE_MAP = 15;
-	public final int NB_HUMAINS = 6;
-	public final int NB_GEANTS = 4;
-	public final int NB_HOMME_POISSONS = 5;
-	public final int NB_NAINS = 7;
-	public final int NB_MONTAGNES = 8;
-	public final int NB_EAU = 10;
-	public final int NB_PONEGLYPHES = 4;
-	public final int TAILLE_SAFE_ZONE = 4;
+	public int TAILLE_MAP = 15;
+	public int NB_HUMAINS = 6;
+	public int NB_GEANTS = 4;
+	public int NB_HOMME_POISSONS = 5;
+	public int NB_NAINS = 7;
+	public int NB_MONTAGNES = 8;
+	public int NB_EAU = 10;
+	public int NB_PONEGLYPHES = 4;
+	public int TAILLE_SAFE_ZONE = 4;
 	
 	private final int PV_BASE = 100;
-	private final int PE_BASE = 30;
+	private final int PE_BASE = TAILLE_MAP * 2;
 	private final int PA_BASE = 5;
 	private final int DEGATS_BASE = 10;
 	
@@ -64,7 +65,104 @@ public class Map {
 	public final int DEGATS_GEANTS = DEGATS_BASE + 15;
 	
 	public Map() {
-		this.generate();
+		System.out.println("Voulez-vous les parametres par défaults ? (O)ui ou (N)on :");
+		try ( Scanner scanner = new Scanner(System.in)){
+			String rep = scanner.next();
+			System.out.println(rep.compareTo("N"));
+			while(rep.compareTo("N")!=0 && rep.compareTo("n")!=0 && rep.compareTo("O")!=0 && rep.compareTo("o")!=0) {
+				System.out.println("Mauvaise touche...");
+				rep = scanner.next();
+			}
+			if(rep.compareTo("N")==0 || rep.compareTo("n")==0) {
+				setParameters();
+				this.printPropertiesSimulation();
+			}
+			this.generate();
+		}
+	}
+	
+	private void setParameters() {
+		try ( Scanner scanner = new Scanner(System.in)){
+			System.out.println("La map sera carre de type TAILLExTAILLE. Elle doit être comprise entre 10 et 50.");
+			System.out.println("Taille de la map ?");
+			int rep = scanner.nextInt();
+			while(rep<10 || rep >50) {
+				System.out.println("Mauvaise valeur...");
+				rep = scanner.nextInt();
+			}
+			this.TAILLE_MAP=rep;
+			
+			System.out.println("La safezone sera la zone protégée pour chaque race. Elle doit être infèrieur à "+ this.TAILLE_MAP/3 + " et supèrieur à 3");
+			System.out.println("Taille de la safezone ?");
+			rep = scanner.nextInt();
+			while(rep<3 || rep > this.TAILLE_MAP/3) {
+				System.out.println("Mauvaise valeur...");
+				rep = scanner.nextInt();
+			}
+			this.TAILLE_SAFE_ZONE=rep;
+			
+			System.out.println("Le nombre de création de personnage pour chaque race doit être supèrieur à 1 et infèrieur à "+ (this.TAILLE_SAFE_ZONE*this.TAILLE_SAFE_ZONE-1));
+			System.out.println("Nombre d'humains ?");
+			rep = scanner.nextInt();
+			while(rep<1 || rep > this.TAILLE_SAFE_ZONE*this.TAILLE_SAFE_ZONE-1) {
+				System.out.println("Mauvaise valeur...");
+				rep = scanner.nextInt();
+			}
+			this.NB_HUMAINS=rep;
+			
+			System.out.println("Nombre d'hommes poissons ?");
+			rep = scanner.nextInt();
+			while(rep<1 || rep > this.TAILLE_SAFE_ZONE*this.TAILLE_SAFE_ZONE-1) {
+				System.out.println("Mauvaise valeur...");
+				rep = scanner.nextInt();
+			}
+			this.NB_HOMME_POISSONS=rep;
+			
+			System.out.println("Nombre des geants ?");
+			rep = scanner.nextInt();
+			while(rep<1 || rep > this.TAILLE_SAFE_ZONE*this.TAILLE_SAFE_ZONE-1) {
+				System.out.println("Mauvaise valeur...");
+				rep = scanner.nextInt();
+			}
+			this.NB_GEANTS=rep;
+			
+			System.out.println("Nombre de nains ?");
+			rep = scanner.nextInt();
+			while(rep<1 || rep > this.TAILLE_SAFE_ZONE*this.TAILLE_SAFE_ZONE-1) {
+				System.out.println("Mauvaise valeur...");
+				rep = scanner.nextInt();
+			}
+			this.NB_NAINS=rep;
+			
+			System.out.println("Les montagnes sont des obstacles que seuls les nains peuvent traverser. Leur nombre doit être compris entre 0 et " + ((this.TAILLE_MAP/2)+1));
+			System.out.println("Nombre de montagnes ?");
+			rep = scanner.nextInt();
+			while(rep<0 || rep > this.TAILLE_MAP/2 + 1) {
+				System.out.println("Mauvaise valeur...");
+				rep = scanner.nextInt();
+			}
+			this.NB_MONTAGNES=rep;
+			
+
+			
+			System.out.println("Les eaux sont des obstacles que seuls les hommes-poissons peuvent traverser. Leur nombre doit être compris entre 0 et " + ((this.TAILLE_MAP/2)+1));
+			System.out.println("Nombre d'eaux ?");
+			rep = scanner.nextInt();
+			while(rep<0 || rep > this.TAILLE_MAP/2 + 1) {
+				System.out.println("Mauvaise valeur...");
+				rep = scanner.nextInt();
+			}
+			this.NB_EAU=rep;
+
+			System.out.println("Les ponéglyphes sont des objets que chaque race doit récupérer pour gagner. Leur nombre doit être compris entre 1 et "+ ((this.TAILLE_MAP/2)+1));
+			System.out.println("Nombre de poneglyphes ?");
+			rep = scanner.nextInt();
+			while(rep<1 || rep > this.TAILLE_MAP/2 + 1) {
+				System.out.println("Mauvaise valeur...");
+				rep = scanner.nextInt();
+			}
+			this.NB_PONEGLYPHES=rep;
+		}
 	}
 	
 	public void generate() {
@@ -76,6 +174,12 @@ public class Map {
 		this.placePersonnage();
 		this.placeObstacles();
 		this.printMap();
+		System.out.println("DEBUT DANS 3 SECONDES...");
+		try {
+			java.util.concurrent.TimeUnit.MILLISECONDS.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void shuffleCharacters() {
