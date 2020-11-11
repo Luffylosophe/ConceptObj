@@ -39,16 +39,30 @@ public abstract class Personnage {
 	}
 	// Echange poneglyphes avec alliés
 	protected void parler(Case target) {
+		ArrayList<Poneglyphe> unknownPoneglyphes = new ArrayList<Poneglyphe>();
 		Personnage personnage = target.getPersonnage();
 		for(Poneglyphe poneglyphe : personnage.poneglyphes) {
 			if(this.poneglyphes.contains(poneglyphe)==false) {
-				this.poneglyphes.add(poneglyphe);
+				unknownPoneglyphes.add(poneglyphe);
 			}
 		}
+		if(unknownPoneglyphes.size()==1) this.currentPoneglyphe = unknownPoneglyphes.get(0);
+		else if(unknownPoneglyphes.size()>=1){
+			int index = Utilitaires.randInt(0, unknownPoneglyphes.size()-1);
+			this.currentPoneglyphe = unknownPoneglyphes.get(index);
+		}
+		
+		
+		unknownPoneglyphes = new ArrayList<Poneglyphe>();
 		for(Poneglyphe poneglyphe : this.poneglyphes) {
 			if(personnage.poneglyphes.contains(poneglyphe)==false) {
-				personnage.poneglyphes.add(poneglyphe);
+				unknownPoneglyphes.add(poneglyphe);
 			}
+		}
+		if(unknownPoneglyphes.size()==1) this.currentPoneglyphe = unknownPoneglyphes.get(0);
+		else if(unknownPoneglyphes.size()>=1){
+			int index = Utilitaires.randInt(0, unknownPoneglyphes.size()-1);
+			this.currentPoneglyphe = unknownPoneglyphes.get(index);
 		}
 	}
     protected void addPoneglyphe(Poneglyphe p) {
