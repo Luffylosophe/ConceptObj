@@ -37,25 +37,31 @@ public class Map {
 	public final int NB_PONEGLYPHES = 4;
 	public final int TAILLE_SAFE_ZONE = 4;
 	
-	public final int PV_HUMAINS = 100;
-	public final int PV_NAINS = 100;
-	public final int PV_HOMMES_POISSONS = 100;
-	public final int PV_GEANTS = 100;
+	private final int PV_BASE = 100;
+	private final int PE_BASE = 30;
+	private final int PA_BASE = 5;
+	private final int DEGATS_BASE = 10;
 	
-	public final int PE_HUMAINS = 30;
-	public final int PE_NAINS = 30;
-	public final int PE_HOMMES_POISSONS = 30;
-	public final int PE_GEANTS = 30;
 	
-	public final int PA_HUMAINS = 5;
-	public final int PA_NAINS = 5;
-	public final int PA_HOMMES_POISSONS = 5;
-	public final int PA_GEANTS = 5;
+	public final int PV_HUMAINS = PV_BASE +5;
+	public final int PV_NAINS = PV_BASE + 5;
+	public final int PV_HOMMES_POISSONS = PV_BASE + 25;
+	public final int PV_GEANTS = PV_BASE -25;
 	
-	public final int DEGATS_HUMAINS = 10;
-	public final int DEGATS_NAINS = 5;
-	public final int DEGATS_HOMMES_POISSONS = 15;
-	public final int DEGATS_GEANTS = 20;
+	public final int PE_HUMAINS = PE_BASE + 15;
+	public final int PE_NAINS = PE_BASE + 15;
+	public final int PE_HOMMES_POISSONS = PE_BASE + 5;
+	public final int PE_GEANTS = PE_BASE - 5;
+	
+	public final int PA_HUMAINS = PA_BASE - 1;
+	public final int PA_NAINS = PA_BASE + 1;
+	public final int PA_HOMMES_POISSONS = PA_BASE - 2;
+	public final int PA_GEANTS = PA_BASE - 2;
+	
+	public final int DEGATS_HUMAINS = DEGATS_BASE;
+	public final int DEGATS_NAINS = DEGATS_BASE - 5;
+	public final int DEGATS_HOMMES_POISSONS = DEGATS_BASE + 10;
+	public final int DEGATS_GEANTS = DEGATS_BASE + 15;
 	
 	public Map() {
 		this.generate();
