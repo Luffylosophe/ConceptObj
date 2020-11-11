@@ -6,6 +6,7 @@ public class Maitre_Homme_Poisson extends Hommes_Poissons {
 	
 	private Maitre_Homme_Poisson(Map m) {
 		super(m);
+		nb_instances_hommes_poissons--;
 	}
 	
 	private static Maitre_Homme_Poisson instance = null;

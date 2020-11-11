@@ -2,13 +2,14 @@ package game;
 
 import java.util.ArrayList;
 
-public class Geant extends Marine {
-	
+public class Geant extends Pirate {
+	public static int nb_instances_geants=0;
 	public Geant(Map m) {
 		this.PA = m.PA_GEANTS;
 		this.PV = m.PV_GEANTS;
 		this.PE = m.PE_GEANTS;
 		this.degats = m.DEGATS_GEANTS;
+		nb_instances_geants++;
 	}
 
 	@Override

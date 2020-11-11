@@ -7,6 +7,7 @@ public class Maitre_Humain extends Humains {
 
 	private Maitre_Humain(Map m) {
 		super(m);
+		nb_instances_humains--; // Ne compte pas dans les instances le maitre humain
 	}
 	
 	private static Maitre_Humain instance = null;

@@ -3,12 +3,13 @@ package game;
 import java.util.ArrayList;
 
 public class Nains extends Pirate {
-	
+	public static int nb_instances_nains=0;
 	public Nains(Map m) {
 		this.PA = m.PA_NAINS;
 		this.PV = m.PV_NAINS;
 		this.PE = m.PE_NAINS;
 		this.degats=m.DEGATS_NAINS;
+		nb_instances_nains++;
 	}
 
 	@Override

@@ -46,6 +46,7 @@ public abstract class Personnage {
 				unknownPoneglyphes.add(poneglyphe);
 			}
 		}
+		if(unknownPoneglyphes.size()!=0) System.out.println("** Partage de savoir **");
 		if(unknownPoneglyphes.size()==1) this.currentPoneglyphe = unknownPoneglyphes.get(0);
 		else if(unknownPoneglyphes.size()>=1){
 			int index = Utilitaires.randInt(0, unknownPoneglyphes.size()-1);
@@ -59,6 +60,7 @@ public abstract class Personnage {
 				unknownPoneglyphes.add(poneglyphe);
 			}
 		}
+		if(unknownPoneglyphes.size()!=0) System.out.println("** Partage de savoir **");
 		if(unknownPoneglyphes.size()==1) this.currentPoneglyphe = unknownPoneglyphes.get(0);
 		else if(unknownPoneglyphes.size()>=1){
 			int index = Utilitaires.randInt(0, unknownPoneglyphes.size()-1);
@@ -70,6 +72,7 @@ public abstract class Personnage {
     		this.poneglyphes.add(p);
     	}
     }
+    
     protected ArrayList<Poneglyphe> getPoneglyphesArray(){
     	return this.poneglyphes;
     }
@@ -100,7 +103,6 @@ public abstract class Personnage {
 	protected void rencontre(Map m, Case target){
 		Personnage p = target.getPersonnage();
 		if( (p instanceof Pirate == this instanceof Pirate) || (p instanceof Marine == this instanceof Marine)) {
-			System.out.println("** Partage savoir **");
 			this.parler(target);
 		}
 		else {

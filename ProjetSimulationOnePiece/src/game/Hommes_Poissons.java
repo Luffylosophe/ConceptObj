@@ -3,12 +3,13 @@ package game;
 import java.util.ArrayList;
 
 public class Hommes_Poissons extends Marine {
-	
+	public static int nb_instances_hommes_poissons=0;
 	public Hommes_Poissons(Map m) {
 		this.PA = m.PA_HOMMES_POISSONS;
 		this.PV = m.PV_HOMMES_POISSONS;
 		this.PE = m.PE_HOMMES_POISSONS;
 		this.degats = m.DEGATS_HOMMES_POISSONS;
+		nb_instances_hommes_poissons++;
 	}
 
 	@Override

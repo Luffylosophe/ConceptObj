@@ -7,6 +7,7 @@ public class Maitre_Nain extends Nains {
 	
 	private Maitre_Nain(Map m) {
 		super(m);
+		nb_instances_nains--;
 	}
 	
 	private static Maitre_Nain instance = null;

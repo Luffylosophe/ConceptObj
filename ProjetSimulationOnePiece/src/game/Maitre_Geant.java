@@ -7,6 +7,7 @@ public class Maitre_Geant extends Geant {
 	
 	private Maitre_Geant(Map m) {
 		super(m);
+		nb_instances_geants--;
 	}
 	
 	private static Maitre_Geant instance = null;

@@ -1,11 +1,18 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Simulation {
 
 	public static void main(String[] args) throws InterruptedException {
-		startSimulation(1);
+		System.out.println("Quel pas pour la simulation ? (en ms)");
+		
+		try ( Scanner scanner = new Scanner(System.in)){
+			int rep = scanner.nextInt();
+			startSimulation(rep);
+		}
+		System.out.println("FIN DE LA SIMULATION.");
 
 	}
 	private static void startSimulation(int pas) {
@@ -16,14 +23,13 @@ public class Simulation {
 			afficheTableauDesScores(sim);
 			//sim.printEtatPartie(); 	// permet de voir qui a cb de poneglyphe
 			try {
-				//java.util.concurrent.TimeUnit.SECONDS.sleep(pas);
-				java.util.concurrent.TimeUnit.MILLISECONDS.sleep(100);
+				java.util.concurrent.TimeUnit.MILLISECONDS.sleep(pas);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		//fonction pour pause
 		}
-		System.out.println("FIN DE LA SIMULATION");
+		System.out.println("FIN DE LA PARTIE");
 		System.out.println("**************************************");
 		System.out.println(findWinner(sim));
 		System.out.println("**************************************");
@@ -37,6 +43,9 @@ public class Simulation {
 		removeDeadPersonnages(sim);
 		sim.shuffleCharacters();
 		sim.printMap();
+		System.out.println("Nombre humains restants : " + Humains.nb_instances_humains + " | Nombre nains restants : " + Nains.nb_instances_nains);
+		System.out.println("Nombre hommes-poissons restants : " + Hommes_Poissons.nb_instances_hommes_poissons + " | Nombre géants restants : " + Geant.nb_instances_geants);
+		System.out.printf("\n");
 	}
 	
 	private static void removeDeadPersonnages(Map sim) {
@@ -44,47 +53,31 @@ public class Simulation {
 		for(Personnage p : sim.personnages) {
 			if(p instanceof Humains) {
 				if(sim.humains.contains(p)==false) {
+					Humains.nb_instances_humains--;
 					personnagesToDelete.add(p);
 				}
 			}
 			else if(p instanceof Nains) {
 				if(sim.nains.contains(p)==false) {
+					Nains.nb_instances_nains--;
 					personnagesToDelete.add(p);
 				}
 			}
 			else if(p instanceof Geant) {
 				if(sim.geants.contains(p)==false) {
+					Geant.nb_instances_geants--;
 					personnagesToDelete.add(p);
 				}
 			}
 			else {
 				if(sim.homme_poissons.contains(p)==false) {
+					Hommes_Poissons.nb_instances_hommes_poissons--;
 					personnagesToDelete.add(p);
 				}
 			}
 		}
 		for(Personnage p : personnagesToDelete) {
 			sim.personnages.remove(p);
-		}
-		for(Humains p : sim.humains) {
-			if(sim.personnages.contains(p)==false) {
-				sim.personnages.remove(p);
-			}
-		}
-		for(Nains p : sim.nains) {
-			if(sim.personnages.contains(p)==false) {
-				sim.personnages.remove(p);
-			}
-		}
-		for(Hommes_Poissons p : sim.homme_poissons) {
-			if(sim.personnages.contains(p)==false) {
-				sim.personnages.remove(p);
-			}
-		}
-		for(Geant p : sim.geants) {
-			if(sim.personnages.contains(p)==false) {
-				sim.personnages.remove(p);
-			}
 		}
 	}
 	

@@ -2,12 +2,14 @@ package game;
 
 import java.util.ArrayList;
 
-public class Humains extends Pirate {
+public class Humains extends Marine {
+	static public int nb_instances_humains=0;
 	public Humains(Map m) {
 		this.PA = m.PA_HUMAINS;
 		this.PV = m.PV_HUMAINS;
 		this.PE = m.PE_HUMAINS;
 		this.degats = m.DEGATS_HUMAINS;
+		nb_instances_humains++;
 	}
 	@Override
 	public void move(Map m) {
