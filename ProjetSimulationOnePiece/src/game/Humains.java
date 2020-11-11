@@ -3,10 +3,11 @@ package game;
 import java.util.ArrayList;
 
 public class Humains extends Pirate {
-	public Humains() {
-		this.PA = 5;
-		this.PV = 100;
-		this.PE = 30;
+	public Humains(Map m) {
+		this.PA = m.PA_HUMAINS;
+		this.PV = m.PV_HUMAINS;
+		this.PE = m.PE_HUMAINS;
+		this.degats = m.DEGATS_HUMAINS;
 	}
 	@Override
 	public void move(Map m) {
@@ -47,7 +48,7 @@ public class Humains extends Pirate {
 								if(currentCase.getPersonnage().isInFight==false) {
 									availableCases.add(currentCase);
 								}
-								else if(currentCase.getPersonnage().isInFight && this.isInFight) {
+								else if(currentCase.getPersonnage().isInFight && this.isInFight && currentCase.getPersonnage().getClass()!=this.getClass()) {
 									ArrayList<Case> onlyIssue = new ArrayList<Case>();
 									onlyIssue.add(currentCase);
 									return onlyIssue;
@@ -114,7 +115,7 @@ public class Humains extends Pirate {
 		
 		if (this.PA > 0 && this.PV>0) {
 			System.out.println("Un "+this.getClass()+" attaque un "+race);
-			ciblepv = ciblepv - 10;
+			ciblepv = ciblepv - this.degats;
 			cible.getPersonnage().setPV(ciblepv);
 			this.setPA(this.PA-1);
 		// si on a assez de point d'attaque la cible se voit inflig� des degats et on perd 1 PA
@@ -123,7 +124,7 @@ public class Humains extends Pirate {
 		else 
 		{
 			System.out.println(this.getClass()+" : Je ne peux pas attaquer");
-			// One ne peut pas attaquer
+			// On ne peut pas attaquer
 		}
 			if (ciblepv <= 0) {
 				System.out.println("FONCTION MOURIR");
@@ -133,7 +134,7 @@ public class Humains extends Pirate {
 			}
 			else {
 				System.out.println(" Il reste encore "+cible.getPersonnage().getPV()+" point de vie au "+race);
-				
+				if(!cible.getPersonnage().isInFight) this.isInFight=false;
 			}
 			
 		}
@@ -153,5 +154,9 @@ public class Humains extends Pirate {
 		}
 		System.out.println("Maitre Humain manquant !!");
 		return null;
+	}
+	protected void restorePE(Map m) {
+		if(this.isInSafeZone(m) && this.PE < m.PE_HUMAINS) this.PE+=3;
+		if(this.isInSafeZone(m) && this.PA < m.PA_HUMAINS) this.PA+=1;
 	}
 }

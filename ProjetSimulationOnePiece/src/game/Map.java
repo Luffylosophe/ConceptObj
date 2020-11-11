@@ -37,6 +37,26 @@ public class Map {
 	public final int NB_PONEGLYPHES = 4;
 	public final int TAILLE_SAFE_ZONE = 4;
 	
+	public final int PV_HUMAINS = 100;
+	public final int PV_NAINS = 100;
+	public final int PV_HOMMES_POISSONS = 100;
+	public final int PV_GEANTS = 100;
+	
+	public final int PE_HUMAINS = 30;
+	public final int PE_NAINS = 30;
+	public final int PE_HOMMES_POISSONS = 30;
+	public final int PE_GEANTS = 30;
+	
+	public final int PA_HUMAINS = 5;
+	public final int PA_NAINS = 5;
+	public final int PA_HOMMES_POISSONS = 5;
+	public final int PA_GEANTS = 5;
+	
+	public final int DEGATS_HUMAINS = 10;
+	public final int DEGATS_NAINS = 5;
+	public final int DEGATS_HOMMES_POISSONS = 15;
+	public final int DEGATS_GEANTS = 20;
+	
 	public Map() {
 		this.generate();
 	}
@@ -59,23 +79,23 @@ public class Map {
 	private void generateCharacters() {
 		
 		for(int i = 0; i < NB_HUMAINS; i++) {
-			Humains h = new Humains();
+			Humains h = new Humains(this);
 			this.humains.add(h);
 			this.personnages.add(h);
 		}
 		
 		for(int i = 0; i < NB_GEANTS; i++) {
-			Geant g = new Geant();
+			Geant g = new Geant(this);
 			this.geants.add(g);
 			this.personnages.add(g);
 		}
 		for(int i = 0; i < NB_HOMME_POISSONS; i++) {
-			Hommes_Poissons p = new Hommes_Poissons();
+			Hommes_Poissons p = new Hommes_Poissons(this);
 			this.homme_poissons.add(p);
 			this.personnages.add(p);
 		}
 		for(int i = 0; i < NB_NAINS; i++) {
-			Nains n = new Nains();
+			Nains n = new Nains(this);
 			this.nains.add(n);
 			this.personnages.add(n);
 		}
@@ -185,7 +205,7 @@ public class Map {
 					// Case safe pour les Humains
 					c = new Case(i,j,true,false,false,false);
 					if(i==0 && j==0) {
-						Maitre_Humain h = Maitre_Humain.getInstance();
+						Maitre_Humain h = Maitre_Humain.getInstance(this);
 						c.setPersonnage(h);
 						this.maitres.add(h);
 					}
@@ -194,7 +214,7 @@ public class Map {
 					// Case safe pour les Homme-Poissons
 					c = new Case(i,j,false,true,false,false);
 					if(i==TAILLE_MAP-1 && j==0) {
-						Maitre_Homme_Poisson p = Maitre_Homme_Poisson.getInstance();
+						Maitre_Homme_Poisson p = Maitre_Homme_Poisson.getInstance(this);
 						c.setPersonnage(p);
 						this.maitres.add(p);
 					}
@@ -203,7 +223,7 @@ public class Map {
 					// Case safe pour les Géants
 					c = new Case(i,j,false,false,true,false);
 					if(i==0 && j==TAILLE_MAP-1) {
-						Maitre_Geant g = Maitre_Geant.getInstance();
+						Maitre_Geant g = Maitre_Geant.getInstance(this);
 						c.setPersonnage(g);
 						this.maitres.add(g);
 					}
@@ -212,7 +232,7 @@ public class Map {
 					// Case safe pour les Nains
 					c = new Case(i,j,false,false,false,true);
 					if(i==TAILLE_MAP-1 && j==TAILLE_MAP-1) {
-						Maitre_Nain n = Maitre_Nain.getInstance();
+						Maitre_Nain n = Maitre_Nain.getInstance(this);
 						c.setPersonnage(n);
 						this.maitres.add(n);
 					}

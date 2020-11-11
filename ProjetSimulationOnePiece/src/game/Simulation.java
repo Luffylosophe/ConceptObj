@@ -89,6 +89,7 @@ public class Simulation {
 	}
 	
 	private static boolean hasWon(Map sim) {
+		if(sim.personnages.size()==0) return true;
 		for(Personnage p : sim.maitres) {
 			if(p.getPoneglyphesArray().size()==sim.NB_PONEGLYPHES) {
 				return true;
@@ -189,16 +190,16 @@ public class Simulation {
 					return "    *    Victoire des humains !    *";
 				}
 				else if(p instanceof Maitre_Homme_Poisson) {
-					return "    *    Victoire des hommes-poissons !    *";
+					return "  *    Victoire des hommes-poissons !    *";
 				}
 				else if(p instanceof Maitre_Nain) {
 					return "    *    Victoire des nains !    *";
 				}
-				else {
+				else if(p instanceof Maitre_Geant){
 					return "    *   Victoire des géants !    *";
 				}
 			}
 		}
-		return null;
+		return "	* MATCH NUL !	*" ;
 	}
 }

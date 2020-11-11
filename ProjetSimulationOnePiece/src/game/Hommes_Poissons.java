@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class Hommes_Poissons extends Marine {
 	
-	public Hommes_Poissons() {
-		this.PA = 5;
-		this.PV = 100;
-		this.PE = 30;
+	public Hommes_Poissons(Map m) {
+		this.PA = m.PA_HOMMES_POISSONS;
+		this.PV = m.PV_HOMMES_POISSONS;
+		this.PE = m.PE_HOMMES_POISSONS;
+		this.degats = m.DEGATS_HOMMES_POISSONS;
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class Hommes_Poissons extends Marine {
 								if(currentCase.getPersonnage().isInFight==false) {
 									availableCases.add(currentCase);
 								}
-								else if(currentCase.getPersonnage().isInFight && this.isInFight) {
+								else if(currentCase.getPersonnage().isInFight && this.isInFight && currentCase.getPersonnage().getClass()!=this.getClass()) {
 									ArrayList<Case> onlyIssue = new ArrayList<Case>();
 									onlyIssue.add(currentCase);
 									return onlyIssue;
@@ -111,7 +112,7 @@ public class Hommes_Poissons extends Marine {
 		
 		if (this.PA > 0 && this.PV>0) {
 			System.out.println("Un "+this.getClass()+" attaque un "+race);
-			ciblepv = ciblepv - 20;
+			ciblepv = ciblepv - this.degats;
 			cible.getPersonnage().setPV(ciblepv);
 			this.setPA(this.PA-1);
 		// si on a assez de point d'attaque la cible se voit inflig� des degats et on perd 1 PA
@@ -129,7 +130,7 @@ public class Hommes_Poissons extends Marine {
 		}
 		else {
 			System.out.println(" Il reste encore "+cible.getPersonnage().getPV()+" point de vie au "+race);
-			
+			if(!cible.getPersonnage().isInFight) this.isInFight=false;
 		}
 			
 	}
@@ -156,5 +157,9 @@ public class Hommes_Poissons extends Marine {
 		// TODO Auto-generated method stub
 		if(this.c.getPosX() >= m.TAILLE_MAP-m.TAILLE_SAFE_ZONE && this.c.getPosY() < m.TAILLE_SAFE_ZONE) return true;
 		else return false;
+	}
+	protected void restorePE(Map m) {
+		if(this.isInSafeZone(m) && this.PE < m.PE_HOMMES_POISSONS) this.PE+=3;
+		if(this.isInSafeZone(m) && this.PA < m.PA_HOMMES_POISSONS) this.PA+=1;
 	}
 }

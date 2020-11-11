@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class Nains extends Pirate {
 	
-	public Nains() {
-		this.PA = 5;
-		this.PV = 100;
-		this.PE = 30;
+	public Nains(Map m) {
+		this.PA = m.PA_NAINS;
+		this.PV = m.PV_NAINS;
+		this.PE = m.PE_NAINS;
+		this.degats=m.DEGATS_NAINS;
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class Nains extends Pirate {
 								if(currentCase.getPersonnage().isInFight==false) {
 									availableCases.add(currentCase);
 								}
-								else if(currentCase.getPersonnage().isInFight && this.isInFight) {
+								else if(currentCase.getPersonnage().isInFight && this.isInFight && currentCase.getPersonnage().getClass()!=this.getClass()) {
 									ArrayList<Case> onlyIssue = new ArrayList<Case>();
 									onlyIssue.add(currentCase);
 									return onlyIssue;
@@ -111,7 +112,7 @@ public class Nains extends Pirate {
 		
 		if (this.PA > 0 && this.PV>0) {
 			System.out.println("Un "+this.getClass()+" attaque un "+race);
-			ciblepv = ciblepv - 5;
+			ciblepv = ciblepv - this.degats;
 			cible.getPersonnage().setPV(ciblepv);
 			this.setPA(this.PA-1);
 		// si on a assez de point d'attaque la cible se voit inflig� des degats et on perd 1 PA
@@ -129,7 +130,7 @@ public class Nains extends Pirate {
 			}
 			else {
 				System.out.println(" Il reste encore "+cible.getPersonnage().getPV()+" point de vie au "+race);
-				
+				if(!cible.getPersonnage().isInFight) this.isInFight=false;
 			}
 			
 		}
@@ -164,6 +165,11 @@ public class Nains extends Pirate {
 			return true;
 		}
 		else return false;
+	}
+	
+	protected void restorePE(Map m) {
+		if(this.isInSafeZone(m) && this.PE < m.PE_NAINS) this.PE+=3;
+		if(this.isInSafeZone(m) && this.PA < m.PA_NAINS) this.PA+=1;
 	}
 	
 }

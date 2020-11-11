@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public abstract class Personnage {
 	protected Case c;
-	protected int PV, PM, PE, PA;
+	protected int PV, PE, PA, degats;
 	protected ArrayList<Poneglyphe> poneglyphes = new ArrayList<Poneglyphe>();
 	protected Poneglyphe currentPoneglyphe=null;
 	protected boolean isInFight= false;
 	
 	public abstract void move(Map m); // fonction qui permet de se deplacer sur la map
-	public abstract void attaquer(Map m, Case cible); // fonction qui permet d'attaquer un personnage
+	protected abstract void attaquer(Map m, Case cible); // fonction qui permet d'attaquer un personnage
 	protected abstract ArrayList<Case> getPossibleMoves(Map m);
 	protected abstract ArrayList<Case> goBack(Map m);
 	protected abstract boolean isInSafeZone(Map m);
@@ -51,37 +51,37 @@ public abstract class Personnage {
 			}
 		}
 	}
-    public void addPoneglyphe(Poneglyphe p) {
+    protected void addPoneglyphe(Poneglyphe p) {
     	if(this.poneglyphes.contains(p)==false) {
     		this.poneglyphes.add(p);
     	}
     }
-    public ArrayList<Poneglyphe> getPoneglyphesArray(){
+    protected ArrayList<Poneglyphe> getPoneglyphesArray(){
     	return this.poneglyphes;
     }
-	public int getPV() {
+    protected int getPV() {
 		return PV;
 	}
-	public void setPV(int pV) {
-		PV = pV;
+    protected void setPV(int pV) {
+		this.PV = pV;
 	}
-	public int getPM() {
-		return PM;
+    protected int getDegats() {
+		return degats;
 	}
-	public void setPM(int pM) {
-		PM = pM;
+    protected void setDegats(int degats) {
+		this.degats=degats;
 	}
-	public int getPE() {
+    protected int getPE() {
 		return PE;
 	}
-	public void setPE(int pE) {
-		PE = pE;
+    protected void setPE(int pE) {
+		this.PE = pE;
 	}
-	public int getPA() {
+    protected int getPA() {
 		return PA;
 	}
-	public void setPA(int pA) {
-		PA = pA;
+    protected void setPA(int pA) {
+		this.PA = pA;
 	}
 	protected void rencontre(Map m, Case target){
 		Personnage p = target.getPersonnage();
@@ -99,8 +99,12 @@ public abstract class Personnage {
 	}
 	
 	protected Case selectNextMove(Map m) {
-		if(PV<=0) return null;
+		if(PV<=0) {
+			System.out.println("ICI");
+			return null;
+		}
 		if(this.currentPoneglyphe!=null || this.PE <= m.TAILLE_MAP/2 || this.PA==0) {
+			this.isInFight=false;
 			ArrayList<Case> moves = this.goBack(m);
 			if(moves.size()==1) {
 				return moves.get(0);
@@ -137,10 +141,7 @@ public abstract class Personnage {
 	protected void setCase(Case nextCase) {
 		this.c=nextCase;
 	}
-	protected void restorePE(Map m) {
-		if(this.isInSafeZone(m) && this.PE < 30) this.PE+=3;
-		if(this.isInSafeZone(m) && this.PA < 5) this.PA+=1;
-	}
+	
 	protected void noMorePE(Map m) {
 		if(this.PE==0 && this.isInSafeZone(m)==false) {
 			System.out.println("MEURS!");

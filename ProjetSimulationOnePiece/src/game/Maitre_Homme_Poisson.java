@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 public class Maitre_Homme_Poisson extends Hommes_Poissons {
 	
-	private Maitre_Homme_Poisson() {
-		
+	private Maitre_Homme_Poisson(Map m) {
+		super(m);
 	}
 	
 	private static Maitre_Homme_Poisson instance = null;
 
-    public static final Maitre_Homme_Poisson getInstance() 
+    public static final Maitre_Homme_Poisson getInstance(Map m) 
     {
     	if (instance == null) {
-    		instance = new Maitre_Homme_Poisson();
+    		instance = new Maitre_Homme_Poisson(m);
     		
     	}
     		
